@@ -101,12 +101,10 @@ const archives = computed(() => {
         </Badge>
       </Shrink>
     </div>
-
     <!-- 分割线 -->
     <div p="x2 y5">
       <hr border="~ dashed $primary-color" opacity-20>
     </div>
-
     <!-- 归档 -->
     <div
       grid="~ cols-2 gap-2.5"

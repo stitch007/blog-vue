@@ -20,12 +20,10 @@ const isBoating = ref(false)
     <div m="xauto y4" w-110px>
       <img src="https://image-1304160910.file.myqcloud.com/avatar.jpg" alt="avatar" rounded-full>
     </div>
-
     <!-- 文库总计 -->
     <div px-8 text="dark-50 dark:gray-200">
       <LibraryCount />
     </div>
-
     <!-- 链接和切换深浅模式 -->
     <div
       flex
@@ -36,7 +34,6 @@ const isBoating = ref(false)
       <Link />
       <div i-fa6-solid:moon dark:text-yellow-300 @click="theme.toggleDark" />
     </div>
-
     <!-- 分割线 -->
     <div
       class="split-line"
@@ -46,7 +43,6 @@ const isBoating = ref(false)
     >
       <hr border="2 dashed cyan-200" m="y4">
     </div>
-
     <!-- menus -->
     <div class="menu" p="x1 y1">
       <NMenu :options="menuOptions" />

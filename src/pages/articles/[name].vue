@@ -5,9 +5,8 @@ import { useMarkdown } from '@/composables'
 const route = useRoute()
 const lib = useLibraryStore()
 
-const title = route.params?.title as string
 const article = computed(() => {
-  return lib.articles.find(a => a.title === title)
+  return lib.articles.find(a => a.title === route.params?.name as string)
 })
 
 const { content, toc } = useMarkdown(computed(() => article.value?.content))
@@ -44,7 +43,6 @@ const { content, toc } = useMarkdown(computed(() => article.value?.content))
           {{ '#' + tag.name }}
         </RouterLink>
       </div>
-
       <!-- 标题 -->
       <h1
         max-w-960px
@@ -55,7 +53,6 @@ const { content, toc } = useMarkdown(computed(() => article.value?.content))
       >
         {{ article.title }}
       </h1>
-
       <!-- 作者 字数 阅读时间 最后更新时间 -->
       <div flex items-center>
         <span display="none md:flex" items-center>
@@ -68,7 +65,6 @@ const { content, toc } = useMarkdown(computed(() => article.value?.content))
           >
           <span pl-2 font-bold>Stitch</span>
         </span>
-
         <div
           flex="~ children:~"
           items="children:center"
@@ -93,7 +89,6 @@ const { content, toc } = useMarkdown(computed(() => article.value?.content))
         </div>
       </div>
     </header>
-
     <main flex overflow-hidden>
       <div
         w-full
@@ -104,10 +99,22 @@ const { content, toc } = useMarkdown(computed(() => article.value?.content))
       >
         <article class="markdown-body" v-html="content" />
       </div>
-      <div display="none lg:flex" w="30%" max-w-70 ml-4>
+      <div
+        display="none lg:flex"
+        w="30%"
+        max-w-70
+        ml-4
+      >
         <div>
           <Profile />
-          <div mt-4 bg="white dark:$dark-bg-color" v-html="toc" />
+          <div
+            mt-4
+            p="x4 y4"
+            bg="white dark:$dark-bg-color"
+            rounded-xl
+          >
+            <div v-html="toc" />
+          </div>
         </div>
       </div>
     </main>

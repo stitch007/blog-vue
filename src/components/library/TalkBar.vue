@@ -25,7 +25,6 @@ const { scrollList, currentIndex } = useScrollList(
     @click="$router.push('/message')"
   >
     <div i-fa6-solid:meteor m="l6" />
-
     <ul
       relative
       w-full
@@ -51,7 +50,6 @@ const { scrollList, currentIndex } = useScrollList(
         </li>
       </TransitionGroup>
     </ul>
-
     <div i-fa6-solid:circle-arrow-right m="r6" />
   </div>
 </template>

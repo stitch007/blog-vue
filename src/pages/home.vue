@@ -47,10 +47,8 @@ const scroll = () => {
         @click="scroll"
       />
     </header>
-
     <main max-w-1564px m="xauto" p="x2 md:x8">
       <TalkBar />
-
       <div
         flex
         m="t4"
@@ -79,8 +77,12 @@ const scroll = () => {
             </div>
           </TabPanel>
         </Tabs>
-
-        <div display="none lg:flex" w="30%" max-w-70 ml-4>
+        <div
+          display="none lg:flex"
+          w="30%"
+          max-w-70
+          ml-4
+        >
           <div>
             <div :class="app.showNavbar ? 'top-18' : 'top-4'" sticky duration-300>
               <Profile />

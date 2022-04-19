@@ -45,7 +45,6 @@ const { el: scrollbarRef } = useHorizontalScroll()
         pos="absolute left-4"
         text="sm dark-100 dark:gray-200"
       />
-
       <div
         ref="scrollbarRef"
         class="scrollbar"
@@ -64,7 +63,6 @@ const { el: scrollbarRef } = useHorizontalScroll()
           {{ name }}
         </Shrink>
       </div>
-
       <div
         pos="absolute right-4"
         text="base dark-100 dark:gray-200 hover:$primary-color"
@@ -75,7 +73,6 @@ const { el: scrollbarRef } = useHorizontalScroll()
         更多
       </div>
     </div>
-
     <KeepAlive>
       <Component :is="tabs[currentTabIndex]" :key="currentTabIndex" />
     </KeepAlive>

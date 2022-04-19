@@ -64,7 +64,6 @@ const navbarStyle = computed((): StyleValue => {
             duration-300
           />
         </Shrink>
-
         <!-- 中间 menus 小于md不显示 -->
         <div display="none md:flex" relative>
           <NDropdown
@@ -88,13 +87,11 @@ const navbarStyle = computed((): StyleValue => {
             </Shrink>
           </NDropdown>
         </div>
-
         <!-- 右边 搜索,切换深浅模式和AppBar(小于md显示) -->
         <div flex items-center>
           <Shrink p="x2 y2" cursor-pointer>
             <div i-fa6-solid:magnifying-glass />
           </Shrink>
-
           <Shrink
             p="x2 y2"
             m="l1 md:l2"
@@ -103,7 +100,6 @@ const navbarStyle = computed((): StyleValue => {
           >
             <div i-fa6-solid:moon dark:text-yellow-300 />
           </Shrink>
-
           <Shrink
             display="md:none"
             p="x2 y2"
