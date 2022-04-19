@@ -29,7 +29,7 @@ const { el: scrollbarRef } = useHorizontalScroll()
 </script>
 
 <template>
-  <div overflow-hidden>
+  <div v-if="tabs" overflow-hidden>
     <div
       flex
       items-center
