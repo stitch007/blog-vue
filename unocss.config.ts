@@ -22,7 +22,7 @@ export default defineConfig({
     presetTypography(),
     presetWebFonts({
       fonts: {
-        sans: 'Titillium Web',
+        titillium: ['Titillium Web', 'sans-serif'],
       },
     }),
   ],

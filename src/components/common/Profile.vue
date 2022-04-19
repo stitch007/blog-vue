@@ -10,7 +10,7 @@
     <div w-28 hover:rotate-360 duration-300>
       <img src="https://image-1304160910.file.myqcloud.com/avatar.jpg" alt="avatar" rounded-full>
     </div>
-    <div font="sans 600" text-2xl mt-2>
+    <div font="titillium 600" text-2xl mt-2>
       Stitch
     </div>
     <div text-center mt-1>

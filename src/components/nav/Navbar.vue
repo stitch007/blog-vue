@@ -48,7 +48,7 @@ const navbarStyle = computed((): StyleValue => {
         >
           <div
             :class="app.isPhone ? 'group-active:opacity-0' : 'group-hover:opacity-0'"
-            font="sans bold"
+            font="titillium bold"
             text-lg
             opacity-100
             duration-300
