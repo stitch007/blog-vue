@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useLibraryStore } from '@/stores'
-import { useMainColor, useMarkdown } from '@/composables'
+import { useMarkdown } from '@/composables'
 
 const route = useRoute()
 const lib = useLibraryStore()
@@ -11,17 +11,16 @@ const article = computed(() => {
 })
 
 const { content, toc } = useMarkdown(computed(() => article.value?.content))
-const { color } = useMainColor(article.value?.coverImage ?? '')
 </script>
 
 <template>
   <div
-    v-if="content"
+    v-if="article"
     max-w-1564px
     m="xauto"
     p="x2 md:x8"
   >
-    <header p="x4 y24" text="base white">
+    <header p="x4 t24 b16" text="base white">
       <!-- 分类和标签 -->
       <div flex items-center>
         <span i-fa6-solid:inbox inline-block text-sm />
@@ -95,10 +94,7 @@ const { color } = useMainColor(article.value?.coverImage ?? '')
       </div>
     </header>
 
-    <main
-      flex
-      overflow-hidden
-    >
+    <main flex overflow-hidden>
       <div
         w-full
         p="x8 y6"
