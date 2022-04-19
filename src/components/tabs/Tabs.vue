@@ -15,7 +15,7 @@ const tabNames = computed(() => {
 })
 
 const props = defineProps<{ active: number }>()
-const emit = defineEmits<{ (e: 'update:active', name: number): void }>()
+const emit = defineEmits<{ (e: 'update:active', index: number): void }>()
 const currentTabIndex = computed({
   get() {
     return props.active

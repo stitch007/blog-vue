@@ -1,0 +1,41 @@
+.toc-container a {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  transition: all .3s;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+
+.light .toc-container a {
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 1rem;
+}
+
+.dark .toc-container a {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+}
+
+.toc-container a:hover {
+  color: var(--primary-color);
+}
+
+.toc-container a.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.toc-container > ol {
+  margin-left: 0rem;
+}
+
+.toc-container > ol > li > ol {
+  margin-left: 0.75rem;
+}
+
+.toc-container > ol > li > ol > li > ol {
+  margin-left: 1.5rem;
+}

@@ -20,7 +20,7 @@ const scroll = () => {
         items-center
         w-full
         m="y16 md:y18"
-        font="titillium bold"
+        font-bold
         text="8 md:11 white opacity-90 center"
       >
         <div>

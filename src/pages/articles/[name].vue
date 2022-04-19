@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { useLibraryStore } from '@/stores'
-import { useMarkdown } from '@/composables'
+import { useAppStore, useLibraryStore } from '@/stores'
+import { useMarkdown, useToc } from '@/composables'
 
 const route = useRoute()
+const app = useAppStore()
 const lib = useLibraryStore()
 
 const article = computed(() => {
@@ -10,6 +11,23 @@ const article = computed(() => {
 })
 
 const { content, toc } = useMarkdown(computed(() => article.value?.content))
+const { tocEl, contentEl, tocLinks, contentTitles } = useToc()
+
+useEventListener('scroll', () => {
+  contentTitles.value.forEach((item, index) => {
+    const delta = (item as HTMLElement).offsetTop - window.scrollY
+    if (delta < 55) {
+      tocLinks.value.forEach((link) => {
+        (link as HTMLElement).className = ''
+      })
+      ;(tocLinks.value[index] as HTMLElement).className = 'active'
+    }
+  })
+})
+
+useTimeoutFn(() => {
+  console.log(tocLinks.value, contentTitles.value)
+}, 3000)
 </script>
 
 <template>
@@ -89,15 +107,14 @@ const { content, toc } = useMarkdown(computed(() => article.value?.content))
         </div>
       </div>
     </header>
-    <main flex overflow-hidden>
+    <main flex>
       <div
         w-full
-        p="x8 y6"
+        p="x12 y8"
         bg="white dark:$dark-bg-color"
         rounded-xl
-        overflow-hidden
       >
-        <article class="markdown-body" v-html="content" />
+        <article ref="contentEl" class="markdown-body" v-html="content" />
       </div>
       <div
         display="none lg:flex"
@@ -108,13 +125,17 @@ const { content, toc } = useMarkdown(computed(() => article.value?.content))
         <div>
           <Profile />
           <div
+            ref="tocEl"
+            :class="app.showNavbar ? 'top-18' : 'top-4'"
+            :toc="toc"
+            sticky
             mt-4
             p="x4 y4"
             bg="white dark:$dark-bg-color"
             rounded-xl
-          >
-            <div v-html="toc" />
-          </div>
+            duration-300
+            v-html="toc"
+          />
         </div>
       </div>
     </main>

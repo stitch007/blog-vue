@@ -7,8 +7,15 @@ import { markdownItImageStyle } from '@/utils'
 const toc = ref('')
 
 const md = MarkdownIt()
-  .use(markdownItAnchor)
+  .use(markdownItAnchor, {
+    permalink: true,
+    permalinkBefore: true,
+    permalinkSymbol: '#',
+    level: [1, 2, 3],
+  })
   .use(markdownItTocDoneRight, {
+    containerClass: 'toc-container',
+    level: [1, 2, 3],
     callback: (tocCode) => {
       toc.value = tocCode
     },

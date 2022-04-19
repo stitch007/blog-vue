@@ -1,15 +1,15 @@
+import type { UserConfig } from 'unocss'
 import {
   defineConfig,
   presetAttributify,
   presetIcons,
   presetTypography,
   presetUno,
-  presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
 
-export default defineConfig({
+const config: UserConfig = defineConfig({
   include: [/\.vue$/, /\.ts$/],
   shortcuts: [],
   presets: [
@@ -20,11 +20,6 @@ export default defineConfig({
       warn: true,
     }),
     presetTypography(),
-    presetWebFonts({
-      fonts: {
-        titillium: ['Titillium Web', 'sans-serif'],
-      },
-    }),
   ],
   transformers: [
     transformerDirectives(),
@@ -32,3 +27,5 @@ export default defineConfig({
   ],
   safelist: 'prose prose-sm m-auto text-left'.split(' '),
 })
+
+export default config
