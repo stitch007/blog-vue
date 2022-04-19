@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "moduleResolution": "node",
+    "target": "es2015",
+    "module": "ESNext",
+    "lib": [
+      "DOM",
+      "ESNext",
+    ],
+    "strict": true,
+    "sourceMap": true,
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "declarationDir": "./dist/types",
+    "outDir": "./dist/lib",
+    "allowJs": true,
+    "checkJs": false,
+    "jsx": "preserve",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": [
+      "vite/client",
+      "vue/ref-macros",
+      "vite-plugin-pages/client",
+      "vite-plugin-vue-layouts/client"
+    ],
+  },
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}
