@@ -1,6 +1,7 @@
 import path from 'path'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
+import VueJsx from '@vitejs/plugin-vue-jsx'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
@@ -16,6 +17,7 @@ export default defineConfig({
   },
   plugins: [
     Vue(),
+    VueJsx(),
     Pages(),
     Layouts(),
     AutoImport({
@@ -23,8 +25,8 @@ export default defineConfig({
       dts: 'src/auto-imports.d.ts',
     }),
     Components({
-      extensions: ['vue', 'md'],
-      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+      extensions: ['vue', 'tsx'],
+      include: [/\.vue$/, /\.tsx$/],
       dts: 'src/components.d.ts',
       resolvers: [NaiveUiResolver()],
     }),
