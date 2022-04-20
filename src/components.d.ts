@@ -19,7 +19,6 @@ declare module 'vue' {
     NLoadingBarProvider: typeof import('naive-ui')['NLoadingBarProvider']
     NMenu: typeof import('naive-ui')['NMenu']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
-    NSkeleton: typeof import('naive-ui')['NSkeleton']
     Profile: typeof import('./components/common/Profile.vue')['default']
     Shrink: typeof import('./components/wrapper/Shrink.vue')['default']
     SideNavbar: typeof import('./components/nav/SideNavbar.vue')['default']

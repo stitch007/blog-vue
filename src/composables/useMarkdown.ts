@@ -1,6 +1,7 @@
 import MarkdownIt from 'markdown-it'
 import markdownItAnchor from 'markdown-it-anchor'
 import markdownItTocDoneRight from 'markdown-it-toc-done-right'
+import markdownItLinkAttributes from 'markdown-it-link-attributes'
 import type { ComputedRef } from 'vue'
 import { markdownItImageStyle } from '@/utils'
 
@@ -18,6 +19,12 @@ const md = MarkdownIt()
     level: [1, 2, 3],
     callback: (tocCode) => {
       toc.value = tocCode
+    },
+  })
+  .use(markdownItLinkAttributes, {
+    matcher: (link: string) => /^https?:\/\//.test(link),
+    attrs: {
+      target: '_blank',
     },
   })
   .use(markdownItImageStyle)
