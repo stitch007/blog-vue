@@ -17,7 +17,7 @@ const { tocEl, contentEl, tocPercentage } = useToc()
 <template>
   <div
     v-if="article"
-    max-w-1564px
+    max-w-1464px
     m="xauto"
     p="x2 md:x8"
   >
@@ -93,8 +93,8 @@ const { tocEl, contentEl, tocPercentage } = useToc()
     </header>
     <main flex>
       <div
-        w-full
-        p="x12 y8"
+        w="full"
+        p="x6 y4 md:(x12 y8)"
         bg="white dark:$dark-bg-color"
         rounded-xl
       >

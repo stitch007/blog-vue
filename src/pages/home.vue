@@ -47,7 +47,7 @@ const scroll = () => {
         @click="scroll"
       />
     </header>
-    <main max-w-1564px m="xauto" p="x2 md:x8">
+    <main max-w-1464px m="xauto" p="x2 md:x8">
       <TalkBar />
       <div
         flex

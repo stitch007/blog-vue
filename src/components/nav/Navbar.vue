@@ -28,7 +28,7 @@ const navbarStyle = computed((): StyleValue => {
     >
       <div
         :class="[app.navbarBgSolid ? 'text-dark-50 dark:text-gray-200' : 'text-white opacity-90']"
-        max-w-1564px
+        max-w-1464px
         flex
         items-center
         justify-between
