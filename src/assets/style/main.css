@@ -1,3 +1,7 @@
+@import './markdown.css';
+@import './toc.css';
+@import './prism.css';
+
 html,
 body,
 #app {

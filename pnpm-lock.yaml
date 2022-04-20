@@ -17,6 +17,7 @@ specifiers:
   markdown-it: ^12.3.2
   markdown-it-anchor: ^8.6.2
   markdown-it-link-attributes: ^4.0.0
+  markdown-it-prism: ^2.2.4
   markdown-it-toc-done-right: ^4.2.0
   mobile-detect: ^1.4.5
   naive-ui: ^2.27.0
@@ -40,6 +41,7 @@ dependencies:
   markdown-it: 12.3.2
   markdown-it-anchor: 8.6.2_d643ca6eb40ae68ab966a77bead78073
   markdown-it-link-attributes: 4.0.0
+  markdown-it-prism: 2.2.4
   markdown-it-toc-done-right: 4.2.0
   mobile-detect: 1.4.5
   naive-ui: 2.27.0_vue@3.2.31
@@ -2597,6 +2599,13 @@ packages:
     resolution: {integrity: sha512-ssjxSLlLfQBkX6BvAx1rCPrx7ZoK91llQQvS3P7KXvlbnVD34OUkfXwWecN7su/7mrI/HOW0RI5szdJOIqYC3w==}
     dev: false
 
+  /markdown-it-prism/2.2.4:
+    resolution: {integrity: sha512-7oQVppKjiZqVQo7s7eLTIs3o/0hdvqAWDW8lvRel6eUCGD4iXjKbSZjvdHZFA2ZnCkQUF47kbvtWZDVQrv7zyQ==}
+    engines: {node: '>=6.0.0'}
+    dependencies:
+      prismjs: 1.28.0
+    dev: false
+
   /markdown-it-toc-done-right/4.2.0:
     resolution: {integrity: sha512-UB/IbzjWazwTlNAX0pvWNlJS8NKsOQ4syrXZQ/C72j+jirrsjVRT627lCaylrKJFBQWfRsPmIVQie8x38DEhAQ==}
     dev: false
@@ -3045,6 +3054,11 @@ packages:
       ansi-regex: 5.0.1
       ansi-styles: 5.2.0
       react-is: 17.0.2
+    dev: false
+
+  /prismjs/1.28.0:
+    resolution: {integrity: sha512-8aaXdYvl1F7iC7Xm1spqSaY/OJBpYW3v+KJ+F17iYxvdc8sfjW194COK5wVhMZX45tGteiBQgdvD/nhxcRwylw==}
+    engines: {node: '>=6'}
     dev: false
 
   /prop-types/15.8.1:
