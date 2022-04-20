@@ -5,7 +5,7 @@ body,
   margin: 0;
   height: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: 56px;
+  scroll-padding-top: 62px;
 }
 
 body::-webkit-scrollbar {

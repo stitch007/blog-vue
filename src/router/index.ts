@@ -22,13 +22,15 @@ const handlePagePermission = (
 
 const setupNavigationGuards = (router: Router) => {
   router.beforeEach((to, from, next) => {
-    window.$loadingBar?.start()
+    if (to.path !== from.path) {
+      window.$loadingBar?.start()
+    }
+    useAppStore().showSideNavbar = false
     handlePagePermission(to, from, next)
   })
 
-  router.afterEach((to) => {
+  router.afterEach((to, from) => {
     window.$loadingBar?.finish()
-    useAppStore().showSideNavbar = false
     to.meta?.title && useTitle(to.meta.title as string)
   })
 }

@@ -11,23 +11,7 @@ const article = computed(() => {
 })
 
 const { content, toc } = useMarkdown(computed(() => article.value?.content))
-const { tocEl, contentEl, tocLinks, contentTitles } = useToc()
-
-useEventListener('scroll', () => {
-  contentTitles.value.forEach((item, index) => {
-    const delta = (item as HTMLElement).offsetTop - window.scrollY
-    if (delta < 55) {
-      tocLinks.value.forEach((link) => {
-        (link as HTMLElement).className = ''
-      })
-      ;(tocLinks.value[index] as HTMLElement).className = 'active'
-    }
-  })
-})
-
-useTimeoutFn(() => {
-  console.log(tocLinks.value, contentTitles.value)
-}, 3000)
+const { tocEl, contentEl, tocPercentage } = useToc()
 </script>
 
 <template>
@@ -125,17 +109,32 @@ useTimeoutFn(() => {
         <div>
           <Profile />
           <div
-            ref="tocEl"
             :class="app.showNavbar ? 'top-18' : 'top-4'"
-            :toc="toc"
             sticky
             mt-4
-            p="x4 y4"
+            p="x4 t4 b3"
             bg="white dark:$dark-bg-color"
             rounded-xl
             duration-300
-            v-html="toc"
-          />
+          >
+            <div
+              flex
+              justify-between
+              p="x3 b2"
+              text="gray-600 dark:gray-200"
+            >
+              <div flex items-center>
+                <div text-sm i-fa6-solid:bars-staggered />
+                <div text-base pl-2>
+                  目录
+                </div>
+              </div>
+              <div text-lg opacity-60>
+                {{ tocPercentage }}
+              </div>
+            </div>
+            <div ref="tocEl" v-html="toc" />
+          </div>
         </div>
       </div>
     </main>
