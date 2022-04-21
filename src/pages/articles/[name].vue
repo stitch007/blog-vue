@@ -92,14 +92,9 @@ const { tocEl, contentEl, tocPercentage } = useToc()
       </div>
     </header>
     <main flex>
-      <div
-        w="full"
-        p="x6 y4 md:(x12 y8)"
-        bg="white dark:$dark-bg-color"
-        rounded-xl
-      >
+      <Card w-full p="x6 y4 md:(x12 y8)">
         <article ref="contentEl" class="markdown-body" v-html="content" />
-      </div>
+      </Card>
       <div
         display="none lg:flex"
         w="30%"
@@ -108,32 +103,24 @@ const { tocEl, contentEl, tocPercentage } = useToc()
       >
         <div>
           <Profile />
-          <div
-            :class="app.showNavbar ? 'top-18' : 'top-4'"
-            sticky
-            mt-4
-            p="x4 t4 b3"
-            bg="white dark:$dark-bg-color"
-            rounded-xl
-            duration-300
-          >
-            <div
-              flex
-              justify-between
-              p="x3 b2"
-              text="gray-600 dark:gray-200"
-            >
-              <div flex items-center>
-                <div text-sm i-fa6-solid:bars-staggered />
-                <div text-base pl-2>
-                  目录
+          <div :class="app.showNavbar ? 'top-18' : 'top-4'" sticky duration-300>
+            <Card mt-4 pb-3>
+              <template #head-left>
+                <div flex items-center pl-3>
+                  <div text-sm i-fa6-solid:bars-staggered />
+                  <div text-base pl-2>
+                    目录
+                  </div>
                 </div>
-              </div>
-              <div text-lg opacity-60>
-                {{ tocPercentage }}
-              </div>
-            </div>
-            <div ref="tocEl" v-html="toc" />
+              </template>
+              <template #head-right>
+                <div text-lg opacity-60 pr-3>
+                  {{ tocPercentage }}
+                </div>
+              </template>
+              <div ref="tocEl" v-html="toc" />
+            </Card>
+            <Recommend mt-4 />
           </div>
         </div>
       </div>

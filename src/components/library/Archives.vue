@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { useLibraryStore } from '@/stores'
-
-const lib = useLibraryStore()
-
 const tags = [
   { tag: { name: 'Chrome', id: 1 }, articles: [''] },
   { tag: { name: 'HTML', id: 2 }, articles: ['', '', '', '', '', '', '', '', '', '', '', '', '', ''] },
@@ -81,12 +77,7 @@ const archives = computed(() => {
 </script>
 
 <template>
-  <div
-    bg="white dark:$dark-bg-color"
-    p="x4 y5"
-    text="base dark-50 dark:white"
-    rounded-xl
-  >
+  <Card py-5>
     <!-- 所有标签 -->
     <div>
       <Shrink
@@ -106,11 +97,7 @@ const archives = computed(() => {
       <hr border="~ dashed $primary-color" opacity-20>
     </div>
     <!-- 归档 -->
-    <div
-      grid="~ cols-2 gap-2.5"
-      px-2
-      cursor-pointer
-    >
+    <div grid="~ cols-2 gap-2.5" px-2 cursor-pointer>
       <div
         v-for="[year, count] in archives"
         :key="year"
@@ -138,5 +125,5 @@ const archives = computed(() => {
         </div>
       </div>
     </div>
-  </div>
+  </Card>
 </template>

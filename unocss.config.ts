@@ -10,7 +10,7 @@ import {
 } from 'unocss'
 
 const config: UserConfig = defineConfig({
-  include: [/\.vue$/, /\.ts$/],
+  include: [/\.vue$/, /\.ts$/, /\.tsx$/],
   shortcuts: [],
   presets: [
     presetUno(),

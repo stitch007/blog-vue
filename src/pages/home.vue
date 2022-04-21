@@ -86,7 +86,7 @@ const scroll = () => {
           <div>
             <div :class="app.showNavbar ? 'top-18' : 'top-4'" sticky duration-300>
               <Profile />
-              <ArchivesCard mt-4 />
+              <Archives mt-4 />
             </div>
           </div>
         </div>

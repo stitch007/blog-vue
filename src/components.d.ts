@@ -4,10 +4,11 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    ArchivesCard: typeof import('./components/library/ArchivesCard.vue')['default']
+    Archives: typeof import('./components/library/Archives.vue')['default']
     ArticleCard: typeof import('./components/library/ArticleCard.vue')['default']
     Background: typeof import('./components/common/Background.vue')['default']
     Badge: typeof import('./components/wrapper/Badge.vue')['default']
+    Card: typeof import('./components/common/Card.vue')['default']
     Footer: typeof import('./components/common/Footer.vue')['default']
     LibraryCount: typeof import('./components/library/LibraryCount.vue')['default']
     Link: typeof import('./components/common/Link.vue')['default']
@@ -19,12 +20,13 @@ declare module 'vue' {
     NLoadingBarProvider: typeof import('naive-ui')['NLoadingBarProvider']
     NMenu: typeof import('naive-ui')['NMenu']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
+    NSkeleton: typeof import('naive-ui')['NSkeleton']
     Profile: typeof import('./components/common/Profile.vue')['default']
+    Recommend: typeof import('./components/library/Recommend.vue')['default']
     Shrink: typeof import('./components/wrapper/Shrink.vue')['default']
     SideNavbar: typeof import('./components/nav/SideNavbar.vue')['default']
     TabPanel: typeof import('./components/tabs/TabPanel.vue')['default']
     Tabs: typeof import('./components/tabs/Tabs.vue')['default']
-    TagsCard: typeof import('./components/library/TagsCard.vue')['default']
     TalkBar: typeof import('./components/library/TalkBar.vue')['default']
   }
 }

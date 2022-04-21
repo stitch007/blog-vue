@@ -130,7 +130,7 @@ const createTime = dayjs(article.createTime).format('YYYY/MM/DD')
         h-full
       >
         <!-- 标题和摘要 -->
-        <div pos="absolute top-8 group-hover:top-4" duration-400>
+        <div pos="absolute top-6 group-hover:top-4" duration-400>
           <div text="5.5 dark-200 dark:white" font-bold line-clamp-2>
             {{ article.title }}
           </div>

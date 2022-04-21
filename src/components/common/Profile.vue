@@ -1,16 +1,9 @@
 <template>
-  <div
-    flex="~ col"
-    items-center
-    bg="white dark:$dark-bg-color"
-    p="x6 y4"
-    text="base dark-50 dark:white"
-    rounded-xl
-  >
+  <Card flex="~ col" items-center p="x6 b3">
     <div w-28 hover:rotate-360 duration-300>
       <img src="https://image-1304160910.file.myqcloud.com/avatar.jpg" alt="avatar" rounded-full>
     </div>
-    <div font-600 text-2xl mt-2>
+    <div font-bold text-2xl mt-2>
       Stitch
     </div>
     <div text-center mt-1>
@@ -25,5 +18,5 @@
     >
       <Link />
     </div>
-  </div>
+  </Card>
 </template>
