@@ -14,8 +14,8 @@ export const useAppStore = defineStore('app-store', () => {
   const scroll = useScroll(document, { throttle: 100 })
 
   watch(scroll.y, (newVal, oldVal) => {
-    navbarBgSolid.value = newVal > 10
-    showNavbar.value = !(!(newVal < oldVal) && newVal > 188)
+    navbarBgSolid.value = newVal > 1
+    showNavbar.value = !(!(newVal < oldVal) && newVal > 180)
   })
 
   return {

@@ -10,6 +10,7 @@ declare module 'vue' {
     Badge: typeof import('./components/wrapper/Badge.vue')['default']
     Card: typeof import('./components/common/Card.vue')['default']
     Footer: typeof import('./components/common/Footer.vue')['default']
+    HomeArticleCard: typeof import('./components/library/HomeArticleCard.vue')['default']
     LibraryCount: typeof import('./components/library/LibraryCount.vue')['default']
     Link: typeof import('./components/common/Link.vue')['default']
     NaiveProvider: typeof import('./components/provider/NaiveProvider.vue')['default']

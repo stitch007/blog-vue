@@ -37,7 +37,7 @@ export const menus: NavMenu[] = [
       {
         icon: 'i-mdi:book-open',
         text: '文章',
-        path: '/archives',
+        path: '/articles',
       },
       {
         icon: 'i-mdi:tag',

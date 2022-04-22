@@ -59,12 +59,12 @@ const scroll = () => {
               v-for="article in lib.articles"
               :key="article.id"
             >
-              <ArticleCard :article="article" mt-4 />
-              <ArticleCard :article="article" reverse mt-4 />
-              <ArticleCard :article="article" mt-4 />
-              <ArticleCard :article="article" reverse mt-4 />
-              <ArticleCard :article="article" mt-4 />
-              <ArticleCard :article="article" reverse mt-4 />
+              <HomeArticleCard :article="article" mt-4 />
+              <HomeArticleCard :article="article" reverse mt-4 />
+              <HomeArticleCard :article="article" mt-4 />
+              <HomeArticleCard :article="article" reverse mt-4 />
+              <HomeArticleCard :article="article" mt-4 />
+              <HomeArticleCard :article="article" reverse mt-4 />
             </div>
           </TabPanel>
           <TabPanel v-for="(category, index) in lib.categories" :key="category.id" :name="category.name">
@@ -73,7 +73,7 @@ const scroll = () => {
               :key="article.id"
               mt-4
             >
-              <ArticleCard :article="article" :reverse="index % 2 == 0" />
+              <HomeArticleCard :article="article" :reverse="index % 2 == 0" />
             </div>
           </TabPanel>
         </Tabs>
