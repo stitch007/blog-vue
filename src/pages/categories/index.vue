@@ -11,7 +11,7 @@ import {
   ToolboxComponent,
   TooltipComponent,
 } from 'echarts/components'
-import { useAppStore, useLibraryStore } from '@/stores'
+import { useAppStore, useLibraryStore, useThemeStore } from '@/stores'
 
 type EChartsOption = echarts.ComposeOption<ToolboxComponentOption | LegendComponentOption | PieSeriesOption>
 
@@ -27,13 +27,19 @@ echarts.use([
 
 const lib = useLibraryStore()
 const app = useAppStore()
+const theme = useThemeStore()
 const router = useRouter()
+
 const chartEl = ref<HTMLElement>()
 let chart: echarts.ECharts
 
 const option = computed((): EChartsOption => {
   return {
-    legend: app.smallerThanMd ? { top: 'bottom' } : { right: 'right' },
+    backgroundColor: 'transparent',
+    legend: {
+      top: app.smallerThanMd ? 'bottom' : undefined,
+      right: app.smallerThanMd ? undefined : 'right',
+    },
     series: [
       {
         name: '全部分类',
@@ -61,11 +67,20 @@ const option = computed((): EChartsOption => {
 })
 
 watch(lib.categories, () => {
-  chart && chart.setOption(option.value)
+  chart.setOption(option.value)
 })
 
-useEventListener('resize', () => {
-  chart && chart.resize()
+watch(() => theme.isDark, () => {
+  if (chartEl.value) {
+    chart.dispose()
+    chart = echarts.init(chartEl.value, theme.isDark ? 'dark' : undefined)
+    chart.setOption(option.value)
+  }
+})
+
+useEventListener(window, 'resize', () => {
+  chart.resize()
+  chart.setOption(option.value)
 })
 
 onMounted(() => {
@@ -73,7 +88,6 @@ onMounted(() => {
     chart = echarts.init(chartEl.value)
     chart.setOption(option.value)
     chart.on('click', (params) => {
-      console.log(params)
       router.push(`/categories/${params.name}`)
     })
   }
