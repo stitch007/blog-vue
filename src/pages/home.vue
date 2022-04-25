@@ -49,10 +49,7 @@ const scroll = () => {
     </header>
     <main max-w-1464px m="xauto" p="x2 md:x8">
       <TalkBar />
-      <div
-        flex
-        m="t4"
-      >
+      <div flex m="t4">
         <Tabs v-model:active="currentTabIndex" w-full>
           <TabPanel name="首页">
             <div

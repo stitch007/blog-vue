@@ -6,6 +6,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Archives: typeof import('./components/library/Archives.vue')['default']
     ArticleCard: typeof import('./components/library/ArticleCard.vue')['default']
+    ArticleSort: typeof import('./components/library/ArticleSort.vue')['default']
     Background: typeof import('./components/common/Background.vue')['default']
     Badge: typeof import('./components/wrapper/Badge.vue')['default']
     Card: typeof import('./components/common/Card.vue')['default']

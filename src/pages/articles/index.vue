@@ -36,6 +36,7 @@ const showYear = (() => {
       >
         <h1
           v-if="showYear(new Date(article.createTime))"
+          :title="new Date(article.createTime).getFullYear().toString()"
           text="xl dark-50 dark:gray-200"
           pb-4
         >

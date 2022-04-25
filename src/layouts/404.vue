@@ -8,8 +8,8 @@
     </div>
     <router-view />
     <div>
-      <button text-sm m="3 t8" @click="$router.back()">
-        back
+      <button text-sm m="3 t8" @click="$router.replace('/')">
+        回到首页
       </button>
     </div>
   </main>

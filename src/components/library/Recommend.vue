@@ -29,6 +29,7 @@ const lib = useLibraryStore()
         rounded-xl
         duration-300
         cursor-pointer
+        @click="$router.push(`/articles/${article.title}`)"
       >
         <div w-16 h-16 overflow-hidden>
           <img

@@ -83,13 +83,13 @@ const archives = computed(() => {
       <Shrink
         v-for="tag in tags"
         :key="tag.tag.id"
-        p="x3 y1"
+        mx-1
+        p="l2 r1 y1"
         cursor-pointer
-        @click="$router.push(`/tag/${tag.tag.name}`)"
+        @click="$router.push(`/tags/${tag.tag.name}`)"
       >
-        <Badge :value="tag.articles.length">
-          {{ tag.tag.name }}
-        </Badge>
+        <span>{{ tag.tag.name }}</span>
+        <sup text="gray-400 dark:gray-500">{{ tag.articles.length }}</sup>
       </Shrink>
     </div>
     <!-- 分割线 -->
