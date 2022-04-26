@@ -22,6 +22,17 @@ export const useToc = () => {
         children?.forEach((child) => {
           if (child.nodeName === 'A') {
             links.push(child)
+            const index = links.length - 1
+            useEventListener(child, 'click', (e) => {
+              e.preventDefault()
+              const target = window.scrollY > offsetTops[index]
+                ? offsetTops[index] - 64
+                : offsetTops[index] - 6
+              window.scrollTo({
+                top: target,
+                behavior: 'smooth',
+              })
+            })
           } else {
             queue.push(child.childNodes)
           }

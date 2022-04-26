@@ -12,16 +12,6 @@ const article = computed(() => {
 
 const { content, toc } = useMarkdown(computed(() => article.value?.content))
 const { tocEl, contentEl, tocPercentage } = useToc()
-
-onMounted(() => {
-  useTimeoutFn(() => {
-    document.documentElement.style.cssText += 'scroll-behavior: smooth;'
-  }, 300)
-})
-
-onUnmounted(() => {
-  document.documentElement.style.cssText += 'scroll-behavior: auto;'
-})
 </script>
 
 <template>
