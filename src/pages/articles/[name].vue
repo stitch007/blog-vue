@@ -118,7 +118,7 @@ const { tocEl, contentEl, tocPercentage } = useToc()
                   {{ tocPercentage }}
                 </div>
               </template>
-              <div ref="tocEl" v-html="toc" />
+              <div ref="tocEl" mt-2 v-html="toc" />
             </Card>
             <Recommend mt-4 />
           </div>
