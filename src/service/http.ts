@@ -1,7 +1,8 @@
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 import axios from 'axios'
+import axiosRetry from 'axios-retry'
 
-interface ResponseData<T> {
+interface ResponseData<T = any> {
   code: number
   message: string
   data: T
@@ -12,53 +13,53 @@ class Http {
 
   constructor(config?: AxiosRequestConfig) {
     this.instance = axios.create(config)
-    this.setInterceptors()
-  }
-
-  private setInterceptors() {
-    this.instance.interceptors.request.use(
-      (config) => {
-        return config
-      },
-      (error) => {
-        console.log(error)
-        return Promise.reject(error)
-      },
-    )
-
-    this.instance.interceptors.response.use(
-      (response: AxiosResponse) => {
-        const backend = response.data as ResponseData<unknown>
-        if (backend.code !== 200) {
-          return Promise.reject(response.data)
-        }
-        return Promise.resolve(backend.data)
-      },
-      (error) => {
-        console.log(error)
-        return Promise.reject(error.response)
-      },
-    )
+    axiosRetry(this.instance, { retries: 3 })
+    const user = JSON.parse(localStorage.getItem('user') ?? '')
+    this.setToken(user.token ?? '')
   }
 
   setToken(token: string) {
     this.instance.defaults.headers.common.Authorization = token
   }
 
-  get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
-    return this.instance.get(url, config).then(res => res as unknown as T)
+  async request<T = any>(url: string, config?: AxiosRequestConfig) {
+    const response = await this.instance.request({ url, ...config })
+    return response.data as ResponseData<T>
   }
 
-  post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
-    return this.instance.post(url, data, config).then(res => res as unknown as T)
+  async get<T>(url: string, config?: AxiosRequestConfig) {
+    const response = await this.request<T>(url, { method: 'GET', ...config })
+    if (response.code !== 200) {
+      window.$message?.error(response.message)
+    }
+    return response.data
   }
 
-  put<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
-    return this.instance.put(url, data, config).then(res => res as unknown as T)
+  async post<T>(url: string, data?: any, config?: AxiosRequestConfig) {
+    const response = await this.request<T>(url, { method: 'POST', data, ...config })
+    if (response.code !== 200) {
+      window.$message?.error(response.message)
+    } else {
+      window.$message?.success('保存成功')
+    }
   }
 
-  delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
-    return this.instance.delete(url, config).then(res => res as unknown as T)
+  async put<T>(url: string, data?: any, config?: AxiosRequestConfig) {
+    const response = await this.request<T>(url, { method: 'PUT', data, ...config })
+    if (response.code !== 200) {
+      window.$message?.error(response.message)
+    } else {
+      window.$message?.success('修改成功')
+    }
+  }
+
+  async delete<T>(url: string, config?: AxiosRequestConfig) {
+    const response = await this.request<T>(url, { method: 'DELETE', ...config })
+    if (response.code !== 200) {
+      window.$message?.error(response.message)
+    } else {
+      window.$message?.success('删除成功')
+    }
   }
 }
 

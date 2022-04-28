@@ -7,6 +7,14 @@ export interface Talk {
   createTime: Date
 }
 
+export interface SaveTalkParams {
+  content: string
+  device: string
+  createTime?: Date
+}
+
+type UpdateTalkParams = Record<'id', number> & Partial<SaveTalkParams>
+
 export const getTalks = () => {
   return http.get<Talk[]>('/talks')
 }
@@ -15,20 +23,12 @@ export const getTalksByIds = (ids: number[]) => {
   return http.get<Talk[]>(`/talks/${ids.join(',')}`)
 }
 
-export interface TalkPost {
-  content: string
-  device: string
-  createTime?: Date
+export const saveTalk = (talk: SaveTalkParams) => {
+  return http.post('/talks', talk)
 }
 
-type TalkPut = Record<'id', number> & Partial<TalkPost>
-
-export const saveTalk = (talk: TalkPost) => {
-  return http.post<Record<'id', number>>('/talks', talk)
-}
-
-export const updateTalk = (talk: TalkPut) => {
-  return http.post<Record<'id', number>>('/talks', talk)
+export const updateTalk = (talk: UpdateTalkParams) => {
+  return http.post('/talks', talk)
 }
 
 export const deleteTalks = (ids: number[]) => {

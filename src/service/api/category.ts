@@ -14,11 +14,11 @@ export const getCategoriesByIds = (ids: number[]) => {
 }
 
 export const saveCategory = (category: Omit<Category, 'id'>) => {
-  return http.post<Record<'id', number>>('/categories', category)
+  return http.post('/categories', category)
 }
 
 export const updateCategory = (category: Category) => {
-  return http.post<Record<'id', number>>('/categories', category)
+  return http.post('/categories', category)
 }
 
 export const deleteCategories = (ids: number[]) => {

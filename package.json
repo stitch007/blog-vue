@@ -12,6 +12,7 @@
   "dependencies": {
     "@vueuse/core": "^8.3.0",
     "axios": "^0.26.1",
+    "axios-retry": "^3.2.4",
     "change-case": "^4.1.2",
     "dayjs": "^1.11.1",
     "echarts": "^5.3.2",
@@ -24,6 +25,7 @@
     "naive-ui": "^2.28.1",
     "pinia": "^2.0.13",
     "randomcolor": "^0.6.2",
+    "vditor": "^3.8.13",
     "vue": "^3.2.33",
     "vue-router": "^4.0.14"
   },

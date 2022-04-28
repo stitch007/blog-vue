@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia'
 import MobileDetect from 'mobile-detect'
-import { breakpointsTailwind } from '@vueuse/core'
+import type { RemovableRef } from '@vueuse/core'
+import { StorageSerializers, breakpointsTailwind } from '@vueuse/core'
+import type { Auth } from '@/service'
+
+export type User = Auth & Record<'username', string>
 
 export const mobileDetect = new MobileDetect(window.navigator.userAgent)
 
@@ -10,6 +14,8 @@ export const useAppStore = defineStore('app-store', () => {
   const showNavbar = ref(true)
   const showSideNavbar = ref(false)
   const navbarBgSolid = ref(false)
+  const showLoginPage = ref(false)
+  const user: RemovableRef<User> = useLocalStorage('user', null, { serializer: StorageSerializers.object })
 
   const scroll = useScroll(document, { throttle: 100 })
 
@@ -24,5 +30,7 @@ export const useAppStore = defineStore('app-store', () => {
     showSideNavbar,
     showNavbar,
     navbarBgSolid,
+    showLoginPage,
+    user,
   }
 })

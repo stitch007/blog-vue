@@ -15,6 +15,20 @@ export interface Article {
   updateTime: Date
 }
 
+export interface SaveArticleParams {
+  title: string
+  content: string
+  summary: string
+  coverImage: string
+  type: number
+  category: Record<'name', number>
+  tags: Record<'name', number>[]
+  createTime?: Date
+  updateTime?: Date
+}
+
+export type UpdateArticleParams = Record<'id', number> & Partial<SaveArticleParams>
+
 export const getArticles = () => {
   return http.get<Article[]>('/articles')
 }
@@ -27,26 +41,12 @@ export const getArticleByTitle = (title: string) => {
   return http.get<Article>('/articles', { params: { title } })
 }
 
-export interface ArticlePost {
-  title: string
-  content: string
-  summary: string
-  coverImage: string
-  type: number
-  category: Record<'name', number>
-  tags: Record<'name', number>[]
-  createTime?: Date
-  updateTime?: Date
+export const saveArticle = (article: SaveArticleParams) => {
+  return http.post('/articles', article)
 }
 
-export type ArticlePut = Record<'id', number> & Partial<ArticlePost>
-
-export const saveArticle = (article: ArticlePost) => {
-  return http.post<Record<'id', number>>('/articles', article)
-}
-
-export const updateArticle = (article: ArticlePut) => {
-  return http.put<Record<'id', number>>('/articles', article)
+export const updateArticle = (article: UpdateArticleParams) => {
+  return http.put('/articles', article)
 }
 
 export const deleteArticles = (ids: number[]) => {
