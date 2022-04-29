@@ -7,18 +7,6 @@ import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
-import visualizer from 'rollup-plugin-visualizer'
-
-const plugins = []
-if (process.env.NODE_ENV === 'production') {
-  plugins.push(
-    visualizer({
-      open: true,
-      gzipSize: true,
-      brotliSize: true,
-    }),
-  )
-}
 
 export default defineConfig({
   resolve: {
@@ -41,6 +29,5 @@ export default defineConfig({
       resolvers: [NaiveUiResolver()],
     }),
     Unocss(),
-    ...plugins,
   ],
 })
