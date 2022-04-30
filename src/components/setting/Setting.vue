@@ -16,12 +16,12 @@ watchEffect(() => {
     <Card class="content" w="80 md:100">
       <Tabs v-model:active="currentTabIndex">
         <TabPanel name="设置">
-          <div m="x2 t2">
+          <div m="x2 t4">
             设置
           </div>
         </TabPanel>
         <TabPanel name="登录">
-          <Login m="x2 t2" />
+          <Login m="x2 t4" />
         </TabPanel>
       </Tabs>
     </Card>

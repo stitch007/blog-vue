@@ -1,15 +1,21 @@
 <script setup lang="ts">
 import type { FormInst, FormItemRule, FormRules } from 'naive-ui'
+import type { Login } from '@/service'
 import { login, setToken } from '@/service'
 import { useAppStore } from '@/stores'
 
 const app = useAppStore()
 const formEl = ref<HTMLElement & FormInst>()
-const model = ref<{ username: string; password: string }>({
+const model = ref<Login>({
   username: '',
   password: '',
+  code: '',
 })
 const disable = ref(false)
+
+onDeactivated(() => {
+  model.value = { username: '', password: '', code: '' }
+})
 
 const rules: FormRules = {
   username: [
@@ -38,6 +44,14 @@ const rules: FormRules = {
       trigger: 'input',
     },
   ],
+  code: [
+    { required: true, message: '请输入验证码' },
+    {
+      pattern: /^[A-Za-z0-9]{4}$/,
+      message: '验证码应为4位字母或数字的组合',
+      trigger: 'input',
+    },
+  ],
 }
 
 const handleSubmit = (e: Event) => {
@@ -48,7 +62,7 @@ const handleSubmit = (e: Event) => {
   formEl.value.validate(async (errors) => {
     if (!errors) {
       disable.value = true
-      const auth = await login(model.value.username, model.value.password)
+      const auth = await login(model.value)
       if (auth) {
         app.user = {
           username: model.value.username,
@@ -69,6 +83,7 @@ const handleSubmit = (e: Event) => {
 
 <template>
   <div>
+    <!-- 表单 用户名密码验证码 -->
     <NForm
       ref="formEl"
       :model="model"
@@ -92,14 +107,27 @@ const handleSubmit = (e: Event) => {
           size="large"
         />
       </NFormItem>
+      <NFormItem path="code">
+        <NInput
+          v-model:value="model.code"
+          type="text"
+          show-password-on="click"
+          placeholder="验证码不区分大小写"
+          size="large"
+        />
+        <img
+          src="http://114.132.223.202:9231/captcha"
+          alt="captcha"
+          h-10
+          ml-4
+          @click="$el.src=`http://114.132.223.202:9231/captcha?t=${Date.now()}`"
+        >
+      </NFormItem>
     </NForm>
-    <div flex justify-end>
-      <span text-sm>忘记密码</span>
-    </div>
+    <!-- 提交表单按钮 -->
     <button
       :disabled="disable"
       w-full
-      mt-4
       p="y1.5"
       bg="$primary-color"
       rounded-full
@@ -108,6 +136,12 @@ const handleSubmit = (e: Event) => {
     >
       登录
     </button>
+    <!-- 左注册 右忘记密码 -->
+    <div flex justify-between m="x2 t4">
+      <span>注册</span>
+      <span>忘记密码</span>
+    </div>
+    <!-- 第三方账号登录 -->
     <div mt-4>
       <NDivider m="!y0">
         其他账号登录
