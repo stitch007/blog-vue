@@ -1,5 +1,4 @@
 import { http } from '../http'
-import { useAppStore } from '@/stores'
 
 export interface Auth {
   token: string
@@ -11,17 +10,11 @@ export const login = async (username: string, password: string) => {
     method: 'POST',
     data: { username, password },
   })
-  if (response.code === 200) {
-    const app = useAppStore()
-    app.user.username = username
-    app.user.token = response.data.token
-    app.user.role = response.data.role
-    app.showLoginPage = false
-    http.setToken(response.data.token)
-    window.$message?.success('登录成功')
-  } else {
+  if (response.code !== 200) {
     window.$message?.error(response.message)
+    return null
   }
+  return response.data as Auth
 }
 
 export const logout = () => {

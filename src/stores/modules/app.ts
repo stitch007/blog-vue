@@ -14,7 +14,7 @@ export const useAppStore = defineStore('app-store', () => {
   const showNavbar = ref(true)
   const showSideNavbar = ref(false)
   const navbarBgSolid = ref(false)
-  const showLoginPage = ref(false)
+  const showSettingPage = ref(false)
   const user: RemovableRef<User> = useLocalStorage('user', null, { serializer: StorageSerializers.object })
 
   const scroll = useScroll(document, { throttle: 100 })
@@ -24,13 +24,18 @@ export const useAppStore = defineStore('app-store', () => {
     showNavbar.value = !(!(newVal < oldVal) && newVal > 180)
   })
 
+  const clearUser = () => {
+    user.value = null
+  }
+
   return {
     isPhone,
     smallerThanMd,
     showSideNavbar,
     showNavbar,
     navbarBgSolid,
-    showLoginPage,
+    showSettingPage,
     user,
+    clearUser,
   }
 })

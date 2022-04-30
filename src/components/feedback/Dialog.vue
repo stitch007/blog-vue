@@ -51,7 +51,7 @@ const onLeave = (el: HTMLElement, done: () => void) => {
         justify-center
         items-center
         bg="[#00000033]"
-        z-100
+        z-999
         duration-200
         @touchmove.prevent
         @mousewheel.prevent

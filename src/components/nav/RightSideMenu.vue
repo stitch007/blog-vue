@@ -9,7 +9,7 @@ const goUp = () => {
 }
 
 const onSettingClick = () => {
-  app.showLoginPage = true
+  app.showSettingPage = true
 }
 </script>
 

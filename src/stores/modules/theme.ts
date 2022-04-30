@@ -66,12 +66,6 @@ export const useThemeStore = defineStore('theme-store', {
           colorFocus: 'transparent',
           loadingColor: this.common.primaryColor,
         },
-        Checkbox: {
-          colorChecked: this.common.primaryColor,
-          borderChecked: `1px solid ${this.common.primaryColor}`,
-          borderFocus: `1px solid ${this.common.primaryColor}`,
-          boxShadowFocus: `0 0 0 2px ${this.common.primaryColor}33`,
-        },
       }
       return theme
     },

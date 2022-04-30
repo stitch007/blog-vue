@@ -14,8 +14,10 @@ class Http {
   constructor(config?: AxiosRequestConfig) {
     this.instance = axios.create(config)
     axiosRetry(this.instance, { retries: 3 })
-    const user = JSON.parse(localStorage.getItem('user') ?? '')
-    this.setToken(user.token ?? '')
+    const user = localStorage.getItem('user')
+    if (user) {
+      this.setToken(JSON.parse(user).token ?? '')
+    }
   }
 
   setToken(token: string) {

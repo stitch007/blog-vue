@@ -7,7 +7,7 @@ const lib = useLibraryStore()
 const currentTabIndex = ref(0)
 
 const scroll = () => {
-  window.scrollTo(0, 254)
+  window.scrollTo({ top: 254, behavior: 'smooth' })
 }
 </script>
 
@@ -47,10 +47,30 @@ const scroll = () => {
         @click="scroll"
       />
     </header>
-    <main max-w-1464px m="xauto" p="x2 md:x8">
+    <main max-w-1400px m="xauto" p="x2 md:x8">
       <TalkBar />
       <div flex m="t4">
-        <Tabs v-model:active="currentTabIndex" w-full>
+        <Tabs v-model:active="currentTabIndex" flex-grow w-full>
+          <template #before>
+            <div
+              i-fa6-solid:bookmark
+              pos="absolute left-4"
+              text="sm dark-100 dark:gray-200"
+            />
+            <div m="r12 md:r16" />
+          </template>
+          <template #after>
+            <div ml-16 />
+            <div
+              pos="absolute right-4"
+              text="hover:$primary-color"
+              duration-300
+              cursor-pointer
+              @click="$router.push('/categories')"
+            >
+              更多
+            </div>
+          </template>
           <TabPanel name="首页">
             <div
               v-for="article in lib.articles"
@@ -74,6 +94,7 @@ const scroll = () => {
             </div>
           </TabPanel>
         </Tabs>
+
         <div
           display="none lg:flex"
           w="30%"

@@ -85,7 +85,7 @@ useEventListener(window, 'resize', () => {
 
 onMounted(() => {
   if (chartEl.value) {
-    chart = echarts.init(chartEl.value)
+    chart = echarts.init(chartEl.value, theme.isDark ? 'dark' : undefined)
     chart.setOption(option.value)
     chart.on('click', (params) => {
       router.push(`/categories/${params.name}`)

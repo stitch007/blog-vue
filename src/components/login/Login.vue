@@ -1,20 +1,15 @@
 <script setup lang="ts">
 import type { FormInst, FormItemRule, FormRules } from 'naive-ui'
+import { login, setToken } from '@/service'
 import { useAppStore } from '@/stores'
-import { login } from '@/service'
 
 const app = useAppStore()
 const formEl = ref<HTMLElement & FormInst>()
-
-interface Model {
-  username: string
-  password: string
-}
-
-const model = ref<Model>({
+const model = ref<{ username: string; password: string }>({
   username: '',
   password: '',
 })
+const disable = ref(false)
 
 const rules: FormRules = {
   username: [
@@ -50,78 +45,79 @@ const handleSubmit = (e: Event) => {
   if (!formEl.value) {
     return
   }
-
-  formEl.value.validate((errors) => {
+  formEl.value.validate(async (errors) => {
     if (!errors) {
-      login(model.value.username, model.value.password)
+      disable.value = true
+      const auth = await login(model.value.username, model.value.password)
+      if (auth) {
+        app.user = {
+          username: model.value.username,
+          token: auth.token,
+          role: auth.role,
+        }
+        setToken(auth.token)
+        window.$message?.success('登录成功')
+      } else {
+        app.clearUser()
+        setToken('')
+      }
+      disable.value = false
     }
   })
 }
 </script>
 
 <template>
-  <Dialog v-model:show="app.showLoginPage">
-    <Card class="content" w="80 md:100">
-      <div p="x2 t2">
-        <NForm
-          ref="formEl"
-          :model="model"
-          :rules="rules"
-          :show-label="false"
-        >
-          <NFormItem path="username">
-            <NInput
-              v-model:value="model.username"
-              type="text"
-              placeholder="请输入账号"
-              size="large"
-            />
-          </NFormItem>
-          <NFormItem path="password">
-            <NInput
-              v-model:value="model.password"
-              type="password"
-              show-password-on="click"
-              placeholder="请输入密码"
-              size="large"
-            />
-          </NFormItem>
-        </NForm>
-        <div flex justify-between items-center>
-          <NCheckbox>
-            记住我
-          </NCheckbox>
-          <span text-sm>忘记密码</span>
-        </div>
-        <button
-          w-full
-          mt-4
-          p="y1.5"
-          bg="$primary-color"
-          rounded-full
-          text-gray-100
-          @click="handleSubmit"
-        >
-          登录
-        </button>
-        <div mt-4>
-          <NDivider m="!y0">
-            其他账号登录
-          </NDivider>
-          <div flex justify-center mt-2>
-            <a href="#" flex items-center>
-              <div i-mdi:wechat text="[#07c160]" />
-              <span pl-1>微信</span>
-            </a>
-          </div>
-        </div>
+  <div>
+    <NForm
+      ref="formEl"
+      :model="model"
+      :rules="rules"
+      :show-label="false"
+    >
+      <NFormItem path="username">
+        <NInput
+          v-model:value="model.username"
+          type="text"
+          placeholder="请输入账号"
+          size="large"
+        />
+      </NFormItem>
+      <NFormItem path="password">
+        <NInput
+          v-model:value="model.password"
+          type="password"
+          show-password-on="click"
+          placeholder="请输入密码"
+          size="large"
+        />
+      </NFormItem>
+    </NForm>
+    <div flex justify-end>
+      <span text-sm>忘记密码</span>
+    </div>
+    <button
+      :disabled="disable"
+      w-full
+      mt-4
+      p="y1.5"
+      bg="$primary-color"
+      rounded-full
+      text-gray-100
+      @click="handleSubmit"
+    >
+      登录
+    </button>
+    <div mt-4>
+      <NDivider m="!y0">
+        其他账号登录
+      </NDivider>
+      <div flex justify-center mt-2>
+        <a href="#" flex items-center>
+          <div i-mdi:wechat text="[#07c160]" />
+          <span pl-1>微信</span>
+        </a>
       </div>
-    </Card>
-  </Dialog>
+    </div>
+  </div>
 </template>
-
-<style scoped>
-.content {
-  box-shadow: 0 6px 16px -9px rgba(0, 0, 0, 0.08), 0 9px 28px 0 rgba(0, 0, 0, 0.05), 0 12px 48px 16px rgba(0, 0, 0, 0.03);
-}
-</style>

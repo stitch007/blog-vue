@@ -17,7 +17,7 @@ const { tocEl, contentEl, tocPercentage } = useToc()
 <template>
   <div
     v-if="article"
-    max-w-1464px
+    max-w-1400px
     m="xauto"
     p="x2 md:x8"
   >
@@ -92,12 +92,12 @@ const { tocEl, contentEl, tocPercentage } = useToc()
       </div>
     </header>
     <main flex>
-      <Card w-full p="x6 y4 md:(x12 y8)">
+      <Card flex-grow w-full p="x6 y4 md:(x12 y8)" overflow-auto>
         <article ref="contentEl" class="markdown-body" v-html="content" />
       </Card>
       <div
         display="none lg:flex"
-        w="30%"
+        w="[30%]"
         max-w-70
         ml-4
       >

@@ -3,7 +3,7 @@
   <Navbar />
   <SideNavbar />
   <RightSideMenu />
-  <Login />
+  <Setting />
   <RouterView />
   <Footer />
 </template>
