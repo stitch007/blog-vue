@@ -4,7 +4,7 @@ import { useAppStore } from '@/stores'
 const { y } = useScroll(window)
 const app = useAppStore()
 
-const goUp = () => {
+const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
@@ -26,7 +26,7 @@ const onSettingClick = () => {
     z-10
   >
     <Transition name="up">
-      <div v-show="y > 100" @click="goUp">
+      <div v-show="y > 100" @click="scrollToTop">
         <div i-fa6-solid:arrow-up />
       </div>
     </Transition>
