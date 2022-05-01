@@ -138,6 +138,7 @@ const onCaptchaClick = () => {
     <NButton
       round
       :color="theme.common.primaryColor"
+      text-color="white"
       w-full
       bg="$primary-color"
       :disabled="disable"

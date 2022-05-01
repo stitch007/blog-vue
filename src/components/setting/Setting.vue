@@ -20,6 +20,7 @@ watchEffect(() => {
           <div flex justify-center m="x2 t4 b2">
             <NButton
               :color="theme.common.primaryColor"
+              text-color="white"
               bg="$primary-color"
               rounded-xl
               @click="$router.push('/editor')"
