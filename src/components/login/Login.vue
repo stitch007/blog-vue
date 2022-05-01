@@ -2,9 +2,11 @@
 import type { FormInst, FormItemRule, FormRules } from 'naive-ui'
 import type { Login } from '@/service'
 import { login, setToken } from '@/service'
-import { useAppStore } from '@/stores'
+import { useAppStore, useThemeStore } from '@/stores'
 
 const app = useAppStore()
+const theme = useThemeStore()
+
 const formEl = ref<HTMLElement & FormInst>()
 const model = ref<Login>({
   username: '',
@@ -133,17 +135,16 @@ const onCaptchaClick = () => {
       </NFormItem>
     </NForm>
     <!-- 提交表单按钮 -->
-    <button
-      :disabled="disable"
+    <NButton
+      round
+      :color="theme.common.primaryColor"
       w-full
-      p="y1.5"
       bg="$primary-color"
-      rounded-full
-      text-gray-100
+      :disabled="disable"
       @click="handleSubmit"
     >
       登录
-    </button>
+    </NButton>
     <!-- 左注册 右忘记密码 -->
     <div flex justify-between m="x2 t4">
       <span>注册</span>

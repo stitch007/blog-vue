@@ -18,6 +18,7 @@ declare module 'vue' {
     Login: typeof import('./components/login/Login.vue')['default']
     NaiveProvider: typeof import('./components/provider/NaiveProvider.vue')['default']
     Navbar: typeof import('./components/nav/Navbar.vue')['default']
+    NButton: typeof import('naive-ui')['NButton']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDivider: typeof import('naive-ui')['NDivider']
     NDrawer: typeof import('naive-ui')['NDrawer']
