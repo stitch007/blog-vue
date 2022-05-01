@@ -28,7 +28,9 @@ const setupNavigationGuards = (router: Router) => {
     if (to.path !== from.path) {
       window.$loadingBar?.start()
     }
-    useAppStore().showSideNavbar = false
+    const app = useAppStore()
+    app.showSettingPage = false
+    app.showSideNavbar = false
     handlePagePermission(to, from, next)
   })
 

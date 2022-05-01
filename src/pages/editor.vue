@@ -47,5 +47,5 @@ onBeforeUnmount(() => {
 
 <route lang="yaml">
 meta:
-  layout: default
+  layout: editor
 </route>
