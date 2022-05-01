@@ -79,6 +79,13 @@ const handleSubmit = (e: Event) => {
     }
   })
 }
+
+const captchaEl = ref<HTMLImageElement>()
+const onCaptchaClick = () => {
+  if (captchaEl.value) {
+    captchaEl.value.src = `http://114.132.223.202:9231/captcha?t=${Date.now()}`
+  }
+}
 </script>
 
 <template>
@@ -116,11 +123,12 @@ const handleSubmit = (e: Event) => {
           size="large"
         />
         <img
+          ref="captchaEl"
           src="http://114.132.223.202:9231/captcha"
           alt="captcha"
           h-10
           ml-4
-          @click="$el.src=`http://114.132.223.202:9231/captcha?t=${Date.now()}`"
+          @click="onCaptchaClick"
         >
       </NFormItem>
     </NForm>
