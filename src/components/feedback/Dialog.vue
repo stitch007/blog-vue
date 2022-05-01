@@ -57,10 +57,16 @@ const onLeave = (el: HTMLElement, done: () => void) => {
         @mousewheel.prevent
         @click="show = false"
       >
-        <div ref="contentEl" @click.stop>
+        <div ref="contentEl" class="content" @click.stop>
           <slot />
         </div>
       </div>
     </Transition>
   </Teleport>
 </template>
+
+<style scoped>
+.content {
+  box-shadow: 0 6px 16px -9px rgba(0, 0, 0, 0.08), 0 9px 28px 0 rgba(0, 0, 0, 0.05), 0 12px 48px 16px rgba(0, 0, 0, 0.03);
+}
+</style>
