@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import dayjs from 'dayjs'
 import { useAppStore, useLibraryStore } from '@/stores'
 import { useMarkdown, useToc } from '@/composables'
 
@@ -57,7 +58,7 @@ const { tocEl, contentEl, tocPercentage } = useToc()
       </h1>
       <!-- 作者 字数 阅读时间 最后更新时间 -->
       <div flex items-center>
-        <span display="none md:flex" items-center>
+        <span display="flex" items-center>
           <img
             src="https://image-1304160910.file.myqcloud.com/avatar.jpg"
             alt="avatar"
@@ -70,23 +71,13 @@ const { tocEl, contentEl, tocPercentage } = useToc()
         <div
           flex="~ children:~"
           items="children:center"
-          p="md:l4"
+          pl-4
           opacity-80
         >
           <span>
-            <span i-fa6-solid:file-word inline-block text-sm />
-            <span display="lt-md:none" ml-1>字数:</span>
-            <span pl-2>236</span>
-          </span>
-          <span>
-            <span i-fa6-solid:stopwatch inline-block ml-4 text-sm />
-            <span display="lt-md:none" ml-1>阅读时长:</span>
-            <span pl-2>6分钟</span>
-          </span>
-          <span>
-            <span i-fa6-solid:calendar inline-block ml-4 text-sm />
+            <span i-fa6-solid:calendar inline-block text-sm />
             <span display="lt-md:none" ml-1>最后更新于:</span>
-            <span pl-2>2022/12/12</span>
+            <span pl-2>{{ dayjs(article.updateTime).format('YYYY/MM/DD') }}</span>
           </span>
         </div>
       </div>
