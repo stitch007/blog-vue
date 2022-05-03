@@ -1,3 +1,4 @@
+export * from './useEditor'
 export * from './useHorizontalScroll'
 export * from './useMarkdown'
 export * from './useScrollList'

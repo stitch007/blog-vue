@@ -12,7 +12,7 @@ export interface Auth {
 }
 
 export const login = async (login: Login) => {
-  const response = await http.request<Auth>('/login', {
+  const response = await http.request<Auth| null>('/login', {
     method: 'POST',
     data: { ...login },
   })
@@ -25,4 +25,8 @@ export const login = async (login: Login) => {
 
 export const logout = () => {
   return http.get('/logout')
+}
+
+export const getCaptchaUrl = () => {
+  return `${http.instance.defaults.baseURL}/captcha?t=${Date.now()}`
 }

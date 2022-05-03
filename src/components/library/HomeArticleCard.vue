@@ -3,13 +3,13 @@ import dayjs from 'dayjs'
 import type { Article } from '@/service'
 import { useAppStore } from '@/stores'
 
-interface Props {
+const { article } = withDefaults(defineProps<{
   article: Article
   // 设备尺寸小于md时生效, false图片在右边, true图片在左边
   reverse?: boolean
-}
-
-const { article } = withDefaults(defineProps<Props>(), { reverse: false })
+}>(), {
+  reverse: false,
+})
 
 const app = useAppStore()
 

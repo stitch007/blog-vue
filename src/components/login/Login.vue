@@ -1,19 +1,15 @@
 <script setup lang="ts">
 import type { FormInst, FormItemRule, FormRules } from 'naive-ui'
 import type { Login } from '@/service'
-import { login, setToken } from '@/service'
+import { getCaptchaUrl, login, setToken } from '@/service'
 import { useAppStore, useThemeStore } from '@/stores'
 
 const app = useAppStore()
 const theme = useThemeStore()
 
 const formEl = ref<HTMLElement & FormInst>()
-const model = ref<Login>({
-  username: '',
-  password: '',
-  code: '',
-})
-const disable = ref(false)
+const model = ref<Login>({ username: '', password: '', code: '' })
+const disableSubmit = ref(false)
 
 onDeactivated(() => {
   model.value = { username: '', password: '', code: '' }
@@ -63,7 +59,7 @@ const handleSubmit = (e: Event) => {
   }
   formEl.value.validate(async (errors) => {
     if (!errors) {
-      disable.value = true
+      disableSubmit.value = true
       const auth = await login(model.value)
       if (auth) {
         app.user = {
@@ -77,7 +73,7 @@ const handleSubmit = (e: Event) => {
         app.clearUser()
         setToken('')
       }
-      disable.value = false
+      disableSubmit.value = false
     }
   })
 }
@@ -85,9 +81,10 @@ const handleSubmit = (e: Event) => {
 const captchaEl = ref<HTMLImageElement>()
 const onCaptchaClick = () => {
   if (captchaEl.value) {
-    captchaEl.value.src = `http://114.132.223.202:9231/captcha?t=${Date.now()}`
+    captchaEl.value.src = getCaptchaUrl()
   }
 }
+onMounted(() => onCaptchaClick())
 </script>
 
 <template>
@@ -126,7 +123,6 @@ const onCaptchaClick = () => {
         />
         <img
           ref="captchaEl"
-          src="http://114.132.223.202:9231/captcha"
           alt="captcha"
           h-10
           ml-4
@@ -141,7 +137,7 @@ const onCaptchaClick = () => {
       text-color="white"
       w-full
       bg="$primary-color"
-      :disabled="disable"
+      :disabled="disableSubmit"
       @click="handleSubmit"
     >
       登录

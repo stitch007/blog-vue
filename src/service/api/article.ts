@@ -10,7 +10,6 @@ export interface Article {
   content: string
   summary: string
   coverImage: string
-  type: number
   createTime: Date
   updateTime: Date
 }
@@ -20,7 +19,6 @@ export interface SaveArticleParams {
   content: string
   summary: string
   coverImage: string
-  type: number
   category: Record<'name', number>
   tags: Record<'name', number>[]
   createTime?: Date
