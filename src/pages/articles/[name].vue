@@ -27,7 +27,7 @@ const { tocEl, contentEl, tocPercentage } = useToc()
       <div flex items-center>
         <span i-fa6-solid:inbox inline-block text-sm />
         <RouterLink
-          :to="`categories/${article.category.name}`"
+          :to="`/categories/${article.category.name}`"
           pl-2
           font-bold
           cursor-pointer
@@ -37,7 +37,7 @@ const { tocEl, contentEl, tocPercentage } = useToc()
         <RouterLink
           v-for="tag in article.tags"
           :key="tag.id"
-          :to="`tags/${tag.name}`"
+          :to="`/tags/${tag.name}`"
           ml-4
           opacity="80 hover:90"
           cursor-pointer
