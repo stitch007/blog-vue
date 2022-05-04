@@ -20,7 +20,7 @@ const categoryOptions = computed(() => lib.categories.map(item => item.name))
 const tagOptions = computed(() => lib.tags.map(item => item.name))
 const loading = ref(false)
 
-// css bind
+// css v-bind
 const shadow = computed(() => {
   return app.showNavbar
     ? '0px -0.5px 0px 0px rgb(235 235 235) inset, 0px 16px 32px rgba(0, 0, 0, 0.04) inset'
