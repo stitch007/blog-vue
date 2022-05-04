@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useAppStore, useLibraryStore, useThemeStore } from '@/stores'
 import { useEditor } from '@/composables'
-import { uploadImage } from '@/service'
+import type { SaveArticleParams } from '@/service'
+import { saveArticle, uploadImage } from '@/service'
 
 const app = useAppStore()
 const lib = useLibraryStore()
@@ -55,14 +56,34 @@ const onImageChange = (file: File) => {
 }
 
 const handleSubmit = async () => {
+  disableSubmit.value = true
   const content = getMarkdown()
-  if (image.value) {
-    const url = await uploadImage(image.value)
-    if (url) {
-      console.log(url)
-    }
+  const error = (title.value ? '' : '标题、')
+          + (content.length > 1 ? '' : '内容、')
+          + (summary.value ? '' : '摘要、')
+          + (image.value ? '' : '封面、')
+          + (categories.value.length ? '' : '分类、')
+          + (tags.value.length ? '' : '标签、')
+  if (error !== '') {
+    window.$message?.error(`${error.slice(0, error.length - 1)}不能为空`)
+    disableSubmit.value = true
+    return
   }
-  return content
+  const res = await uploadImage(image.value!)
+  if (!res) {
+    disableSubmit.value = true
+    return
+  }
+  const params: SaveArticleParams = {
+    title: title.value,
+    content,
+    summary: summary.value,
+    coverImage: res.url,
+    category: { name: categories.value[0] },
+    tags: tags.value.map(name => ({ name })),
+  }
+  saveArticle(params)
+  disableSubmit.value = true
 }
 </script>
 
