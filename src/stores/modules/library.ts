@@ -46,6 +46,11 @@ export const useLibraryStore = defineStore('library-store', () => {
     talks.value = await getTalks() || []
   }
 
+  const fetchCategoriesAndTags = async () => {
+    categories.value = await getCategories() || []
+    tags.value = await getTags() || []
+  }
+
   const fetchArticleByTitle = async (title: string) => {
     const article = await getArticleByTitle(title)
     if (!article) {
@@ -68,6 +73,7 @@ export const useLibraryStore = defineStore('library-store', () => {
     sameCategoryArticles,
     sameTagArticles,
     fetchData,
+    fetchCategoriesAndTags,
     fetchArticleByTitle,
   }
 })

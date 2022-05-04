@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { useAppStore, useLibraryStore, useThemeStore } from '@/stores'
 import { useEditor } from '@/composables'
-import type { SaveArticleParams } from '@/service'
+import type { Article, SaveArticleParams } from '@/service'
 import { saveArticle, uploadImage } from '@/service'
 
 const app = useAppStore()
 const lib = useLibraryStore()
 const theme = useThemeStore()
+const router = useRouter()
 
 // 数据绑定
 const { el: editorEl, wordCount, getMarkdown } = useEditor()
@@ -17,7 +18,7 @@ const categories = ref<string[]>([])
 const tags = ref<string[]>([])
 const categoryOptions = computed(() => lib.categories.map(item => item.name))
 const tagOptions = computed(() => lib.tags.map(item => item.name))
-const disableSubmit = ref(false)
+const loading = ref(false)
 
 // css bind
 const shadow = computed(() => {
@@ -56,7 +57,8 @@ const onImageChange = (file: File) => {
 }
 
 const handleSubmit = async () => {
-  disableSubmit.value = true
+  loading.value = true
+  // 校验数据
   const content = getMarkdown()
   const error = (title.value ? '' : '标题、')
           + (content.length > 1 ? '' : '内容、')
@@ -66,14 +68,16 @@ const handleSubmit = async () => {
           + (tags.value.length ? '' : '标签、')
   if (error !== '') {
     window.$message?.error(`${error.slice(0, error.length - 1)}不能为空`)
-    disableSubmit.value = true
+    loading.value = false
     return
   }
+  // 上传图片
   const res = await uploadImage(image.value!)
   if (!res) {
-    disableSubmit.value = true
+    loading.value = false
     return
   }
+  // 上传文章
   const params: SaveArticleParams = {
     title: title.value,
     content,
@@ -82,8 +86,41 @@ const handleSubmit = async () => {
     category: { name: categories.value[0] },
     tags: tags.value.map(name => ({ name })),
   }
-  saveArticle(params)
-  disableSubmit.value = true
+  const res2 = await saveArticle(params)
+  if (!res2) {
+    loading.value = false
+    return
+  }
+  window.$message?.success('发布成功')
+  // 请求所有分类和标签
+  await lib.fetchCategoriesAndTags()
+  // 构造文章插入到lib.articles中
+  const article: Article = {
+    id: res2.id,
+    ...params,
+    category: {
+      id: lib.categories.find((item) => {
+        return item.name === categories.value[0]
+      })?.id ?? -1,
+      name: categories.value[0],
+    },
+    tags: tags.value.map((name) => {
+      return {
+        id: lib.tags.find((item) => {
+          return item.name === name
+        })?.id ?? -1,
+        name,
+      }
+    }),
+    createTime: new Date(),
+    updateTime: new Date(),
+  }
+  lib.articles.unshift(article)
+  loading.value = false
+  // 跳转到这篇文章
+  useTimeoutFn(() => {
+    router.push(`/articles/${article.title}`)
+  }, 300)
 }
 </script>
 
@@ -176,7 +213,7 @@ const handleSubmit = async () => {
         <NButton
           bg="$primary-color"
           :color="theme.common.primaryColor"
-          :disabled="disableSubmit"
+          :loading="loading"
           @click="handleSubmit"
         >
           发布
@@ -213,7 +250,7 @@ const handleSubmit = async () => {
   border: none;
   background-color: #fcfcfc;
   padding: 0 !important;
-  transition: all .3s;
+  transition: all .25s;
   box-shadow: v-bind('shadow');
   z-index: 101;
 }
