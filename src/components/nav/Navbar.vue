@@ -117,21 +117,19 @@ const navbarStyle = computed((): StyleValue => {
 
 <style scoped>
 .navbar-enter-active {
-  animation: appear .25s ease-in-out;
+  animation: appear .25s;
 }
 
 .navbar-leave-active {
-  animation: appear .25s ease-in-out reverse;
+  animation: appear .25s reverse;
 }
 
 @keyframes appear {
   0% {
     transform: translateY(-3.5rem);
-    opacity: 0;
   }
   100% {
     transform: translateY(0);
-    opacity: 1;
   }
 }
 </style>
