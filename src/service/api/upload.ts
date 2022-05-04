@@ -9,7 +9,7 @@ export const uploadImage = async (image: File) => {
     data: formData,
   })
   if (response.code !== 200) {
-    window.$message?.error(response.message)
+    window.$message?.error(`上传图片失败: ${response.message}`)
     return null
   }
   return response.data as Record<'url', string>

@@ -40,24 +40,23 @@ export const useLibraryStore = defineStore('library-store', () => {
   })
 
   const fetchData = async () => {
-    try {
-      articles.value = await getArticles()
-      categories.value = await getCategories()
-      tags.value = await getTags()
-      talks.value = await getTalks()
-    } catch (_error) {}
+    articles.value = await getArticles() || []
+    categories.value = await getCategories() || []
+    tags.value = await getTags() || []
+    talks.value = await getTalks() || []
   }
 
   const fetchArticleByTitle = async (title: string) => {
-    try {
-      const article = await getArticleByTitle(title)
-      const index = articles.value.findIndex(item => item.id === article.id)
-      if (index !== -1) {
-        articles.value[index] = article
-      } else {
-        articles.value.push(article)
-      }
-    } catch (_error) {}
+    const article = await getArticleByTitle(title)
+    if (!article) {
+      return
+    }
+    const index = articles.value.findIndex(item => item.id === article.id)
+    if (index !== -1) {
+      articles.value[index] = article
+    } else {
+      articles.value.push(article)
+    }
   }
 
   return {

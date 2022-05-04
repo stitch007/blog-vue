@@ -14,13 +14,13 @@ export const getTagsByIds = (ids: number[]) => {
 }
 
 export const saveTag = (tag: Omit<Tag, 'id'>) => {
-  return http.post('/tags', tag)
+  return http.post<Record<'id', number>>('/tags', tag)
 }
 
 export const updateTag = (tag: Tag) => {
-  return http.post('/tags', tag)
+  return http.post<Record<'id', number>>('/tags', tag)
 }
 
 export const deleteTags = (ids: number[]) => {
-  return http.delete(`/tags/${ids.join(',')}`)
+  return http.delete<null>(`/tags/${ids.join(',')}`)
 }

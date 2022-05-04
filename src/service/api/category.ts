@@ -14,13 +14,13 @@ export const getCategoriesByIds = (ids: number[]) => {
 }
 
 export const saveCategory = (category: Omit<Category, 'id'>) => {
-  return http.post('/categories', category)
+  return http.post<Record<'id', number>>('/categories', category)
 }
 
 export const updateCategory = (category: Category) => {
-  return http.post('/categories', category)
+  return http.post<Record<'id', number>>('/categories', category)
 }
 
 export const deleteCategories = (ids: number[]) => {
-  return http.delete(`/categories/${ids.join(',')}`)
+  return http.delete<null>(`/categories/${ids.join(',')}`)
 }

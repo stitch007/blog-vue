@@ -40,13 +40,13 @@ export const getArticleByTitle = (title: string) => {
 }
 
 export const saveArticle = (article: SaveArticleParams) => {
-  return http.post('/articles', article)
+  return http.post<Record<'id', number>>('/articles', article)
 }
 
 export const updateArticle = (article: UpdateArticleParams) => {
-  return http.put('/articles', article)
+  return http.put<Record<'id', number>>('/articles', article)
 }
 
 export const deleteArticles = (ids: number[]) => {
-  return http.delete(`/articles/${ids.join(',')}`)
+  return http.delete<null>(`/articles/${ids.join(',')}`)
 }

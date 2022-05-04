@@ -24,13 +24,13 @@ export const getTalksByIds = (ids: number[]) => {
 }
 
 export const saveTalk = (talk: SaveTalkParams) => {
-  return http.post('/talks', talk)
+  return http.post<Record<'id', number>>('/talks', talk)
 }
 
 export const updateTalk = (talk: UpdateTalkParams) => {
-  return http.post('/talks', talk)
+  return http.post<Record<'id', number>>('/talks', talk)
 }
 
 export const deleteTalks = (ids: number[]) => {
-  return http.delete(`/talks/${ids.join(',')}`)
+  return http.delete<null>(`/talks/${ids.join(',')}`)
 }

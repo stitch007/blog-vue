@@ -12,15 +12,7 @@ export interface Auth {
 }
 
 export const login = async (login: Login) => {
-  const response = await http.request<Auth| null>('/login', {
-    method: 'POST',
-    data: { ...login },
-  })
-  if (response.code !== 200) {
-    window.$message?.error(response.message)
-    return null
-  }
-  return response.data as Auth
+  return http.post<Auth>('/login', login)
 }
 
 export const logout = () => {
