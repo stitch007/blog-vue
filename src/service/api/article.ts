@@ -19,8 +19,8 @@ export interface SaveArticleParams {
   content: string
   summary: string
   coverImage: string
-  category: Record<'name', number>
-  tags: Record<'name', number>[]
+  category: Record<'name', string>
+  tags: Record<'name', string>[]
   createTime?: Date
   updateTime?: Date
 }
