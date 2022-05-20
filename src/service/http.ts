@@ -50,11 +50,6 @@ class Http {
 
   async post<T>(url: string, data?: any, config?: AxiosRequestConfig) {
     const response = await this.request<T>(url, { method: 'POST', data, ...config })
-    // if (response.code !== 200) {
-    //   window.$message?.error(response.message)
-    // } else {
-    //   window.$message?.success('保存成功')
-    // }
     if (response !== null) {
       if (response.code !== 200) {
         window.$message?.error(response.message)
@@ -67,11 +62,6 @@ class Http {
 
   async put<T>(url: string, data?: any, config?: AxiosRequestConfig) {
     const response = await this.request<T>(url, { method: 'PUT', data, ...config })
-    // if (response.code !== 200) {
-    //   window.$message?.error(response.message)
-    // } else {
-    //   window.$message?.success('修改成功')
-    // }
     if (response !== null) {
       if (response.code !== 200) {
         window.$message?.error(response.message)
@@ -84,11 +74,6 @@ class Http {
 
   async delete<T>(url: string, config?: AxiosRequestConfig) {
     const response = await this.request<T>(url, { method: 'DELETE', ...config })
-    // if (response.code !== 200) {
-    //   window.$message?.error(response.message)
-    // } else {
-    //   window.$message?.success('删除成功')
-    // }
     if (response !== null) {
       if (response.code !== 200) {
         window.$message?.error(response.message)
