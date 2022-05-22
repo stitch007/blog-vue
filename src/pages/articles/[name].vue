@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
-import { useAppStore, useLibraryStore } from '@/stores'
+import Giscus from '@giscus/vue'
+import { useAppStore, useLibraryStore, useThemeStore } from '@/stores'
 import { useMarkdown, useToc } from '@/composables'
 
 const route = useRoute()
 const app = useAppStore()
 const lib = useLibraryStore()
+const theme = useThemeStore()
 
 const article = computed(() => {
   return lib.articles.find(a => a.title === route.params?.name as string)
@@ -85,6 +87,21 @@ const { tocEl, contentEl, tocPercentage } = useToc()
     <main flex>
       <Card flex-grow w-full p="x6 y4 md:(x12 y8)" overflow-auto>
         <article ref="contentEl" class="markdown-body" v-html="content" />
+        <div py-2 />
+        <Giscus
+          repo="stitch007/blog-vue"
+          repo-id="R_kgDOHYI8VQ"
+          category="Announcements"
+          category-id="DIC_kwDOHYI8Vc4CPO6X"
+          mapping="specific"
+          :term="article.title"
+          reactions-enabled="1"
+          emit-metadata="0"
+          input-position="top"
+          :theme="theme.isDark ? 'dark' : 'light'"
+          lang="zh-CN"
+          loading="lazy"
+        />
       </Card>
       <div
         display="none lg:flex"
