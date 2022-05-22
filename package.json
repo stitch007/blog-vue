@@ -1,15 +1,16 @@
 {
-  "name": "vue-blog",
+  "name": "blog-vue",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "vite --host",
+    "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
     "check": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "@giscus/vue": "^2.0.5",
     "@vueuse/core": "^8.3.0",
     "axios": "^0.26.1",
     "axios-retry": "^3.2.4",
