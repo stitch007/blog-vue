@@ -4,7 +4,9 @@ import markdownItTocDoneRight from 'markdown-it-toc-done-right'
 import markdownItLinkAttributes from 'markdown-it-link-attributes'
 import markdownItPrism from 'markdown-it-prism'
 import type { ComputedRef } from 'vue'
-import { markdownItImageStyle } from '@/utils'
+
+import 'prismjs/components/prism-bash'
+import 'prismjs/components/prism-javascript'
 
 const toc = ref('')
 
@@ -29,7 +31,6 @@ const md = MarkdownIt()
     },
   })
   .use(markdownItPrism)
-  .use(markdownItImageStyle)
 
 export const useMarkdown = (markdown: ComputedRef<string | undefined>) => {
   const content = computed(() => {

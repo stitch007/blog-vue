@@ -29,6 +29,7 @@ declare module 'vue' {
     NLoadingBarProvider: typeof import('naive-ui')['NLoadingBarProvider']
     NMenu: typeof import('naive-ui')['NMenu']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
+    NSkeleton: typeof import('naive-ui')['NSkeleton']
     PictureUpload: typeof import('./components/upload/PictureUpload.vue')['default']
     Profile: typeof import('./components/common/Profile.vue')['default']
     Recommend: typeof import('./components/library/Recommend.vue')['default']
