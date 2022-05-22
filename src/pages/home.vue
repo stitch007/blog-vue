@@ -73,15 +73,10 @@ const scroll = () => {
           </template>
           <TabPanel name="首页">
             <div
-              v-for="article in lib.articles"
+              v-for="(article, index) in lib.articles"
               :key="article.id"
             >
-              <HomeArticleCard :article="article" mt-4 />
-              <HomeArticleCard :article="article" reverse mt-4 />
-              <HomeArticleCard :article="article" mt-4 />
-              <HomeArticleCard :article="article" reverse mt-4 />
-              <HomeArticleCard :article="article" mt-4 />
-              <HomeArticleCard :article="article" reverse mt-4 />
+              <HomeArticleCard :article="article" mt-4 :reverse="index % 2 !== 0" />
             </div>
           </TabPanel>
           <TabPanel v-for="(category, index) in lib.categories" :key="category.id" :name="category.name">

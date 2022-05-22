@@ -53,14 +53,12 @@ const option = computed((): EChartsOption => {
         label: {
           formatter: '{b}:{c}篇({d}%)',
         },
-        data: [
-          { name: '机器人', value: 22 },
-          { name: '知识总结', value: 2 },
-          { name: '学习笔记', value: 6 },
-          { name: '算法与数据结构', value: 17 },
-          { name: '人工智能', value: 12 },
-          { name: '嵌入式', value: 1 },
-        ],
+        data: lib.sameCategoryArticles.map((item) => {
+          return {
+            name: item.category.name,
+            value: item.articles.length,
+          }
+        }),
       },
     ],
   }

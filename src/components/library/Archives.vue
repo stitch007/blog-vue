@@ -1,75 +1,12 @@
 <script setup lang="ts">
-const tags = [
-  { tag: { name: 'Chrome', id: 1 }, articles: [''] },
-  { tag: { name: 'HTML', id: 2 }, articles: ['', '', '', '', '', '', '', '', '', '', '', '', '', ''] },
-  { tag: { name: '教程', id: 3 }, articles: ['', '', '', '', '', '', ''] },
-  { tag: { name: '二叉树', id: 4 }, articles: ['', ''] },
-  { tag: { name: '哈希表', id: 5 }, articles: ['', '', '', '', '', '', ''] },
-  { tag: { name: '前端', id: 6 }, articles: ['', '', '', '', '', '', '', '', ''] },
-  { tag: { name: '计算机图形学', id: 7 }, articles: ['', '', ''] },
-  { tag: { name: '编译原理', id: 8 }, articles: ['', '', '', '', '', '', '', '', '', '', '', ''] },
-  { tag: { name: '类型体操', id: 9 }, articles: ['', '', '', '', '', '', '', '', '', ''] },
-  { tag: { name: '嵌入式', id: 10 }, articles: ['', '', '', '', '', ''] },
-]
+import { useLibraryStore } from '@/stores'
 
-const articles = [
-  { createTime: new Date() },
-  { createTime: new Date() },
-  { createTime: new Date() },
-  { createTime: new Date() },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1610786249000) },
-  { createTime: new Date(1579163849000) },
-  { createTime: new Date(1579163849000) },
-  { createTime: new Date(1579163849000) },
-  { createTime: new Date(1579163849000) },
-  { createTime: new Date(1579163849000) },
-  { createTime: new Date(1579163849000) },
-  { createTime: new Date(1579163849000) },
-  { createTime: new Date(1579163849000) },
-  { createTime: new Date(1579163849000) },
-  { createTime: new Date(1547627849000) },
-]
+const lib = useLibraryStore()
 
 const archives = computed(() => {
   const res = new Map<number, number>()
-  articles.forEach((article) => {
-    const year = article.createTime.getFullYear()
+  lib.articles.forEach((article) => {
+    const year = new Date(article.createTime).getFullYear()
     res.set(year, (res.get(year) ?? 0) + 1)
   })
   return res
@@ -81,7 +18,7 @@ const archives = computed(() => {
     <!-- 所有标签 -->
     <div>
       <Shrink
-        v-for="tag in tags"
+        v-for="tag in lib.sameTagArticles"
         :key="tag.tag.id"
         mx-1
         p="l2 r1 y1"
