@@ -3,6 +3,7 @@ import randomColor from 'randomcolor'
 import { useLibraryStore } from '@/stores'
 
 const lib = useLibraryStore()
+useTitle('全部标签 | Stitch\'s BLOG')
 
 const styles = (num: number) => {
   return {

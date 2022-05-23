@@ -8,6 +8,7 @@ const route = useRoute()
 const app = useAppStore()
 const lib = useLibraryStore()
 const theme = useThemeStore()
+useTitle(`${route.params.name} | Stitch\'s BLOG`)
 
 const article = computed(() => {
   return lib.articles.find(a => a.title === route.params?.name as string)

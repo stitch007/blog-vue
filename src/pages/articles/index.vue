@@ -2,6 +2,7 @@
 import { useLibraryStore } from '@/stores'
 
 const lib = useLibraryStore()
+useTitle('全部文章 | Stitch\'s BLOG')
 
 const showYear = (() => {
   const set = new Set<number>()

@@ -8,6 +8,7 @@ const app = useAppStore()
 const lib = useLibraryStore()
 const theme = useThemeStore()
 const router = useRouter()
+useTitle('写文章 | Stitch\'s BLOG')
 
 // 数据绑定
 const { el: editorEl, wordCount, getMarkdown } = useEditor()

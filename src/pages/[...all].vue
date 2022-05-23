@@ -1,4 +1,5 @@
 <script setup lang="ts">
+useTitle('页面消失了~~ | Stitch\'s BLOG')
 </script>
 
 <template>

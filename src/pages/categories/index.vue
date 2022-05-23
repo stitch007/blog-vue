@@ -29,6 +29,7 @@ const lib = useLibraryStore()
 const app = useAppStore()
 const theme = useThemeStore()
 const router = useRouter()
+useTitle('全部分类 | Stitch\'s BLOG')
 
 const chartEl = ref<HTMLElement>()
 let chart: echarts.ECharts

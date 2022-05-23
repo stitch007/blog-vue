@@ -3,6 +3,7 @@ import { useAppStore, useLibraryStore } from '@/stores'
 
 const app = useAppStore()
 const lib = useLibraryStore()
+useTitle('Stitch\'s BLOG')
 
 const currentTabIndex = ref(0)
 

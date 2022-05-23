@@ -4,6 +4,7 @@ import { useLibraryStore } from '@/stores'
 const route = useRoute()
 const router = useRouter()
 const lib = useLibraryStore()
+useTitle(`${route.params.name} | Stitch\'s BLOG`)
 
 const sameCategoryArticle = lib.sameCategoryArticles.find((item) => {
   return item.category.name === route.params.name as string
