@@ -1,6 +1,6 @@
 import type { App } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import type { NavigationGuardNext, RouteLocationNormalized, Router } from 'vue-router'
+import type { Router } from 'vue-router'
 import generatedRoutes from 'virtual:generated-pages'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { useAppStore } from '@/stores'
@@ -15,23 +15,30 @@ const router = createRouter({
   },
 })
 
-const handlePagePermission = (
-  to: RouteLocationNormalized,
-  from: RouteLocationNormalized,
-  next: NavigationGuardNext,
-) => {
-  next()
-}
+const adminRouter = ['editor']
 
 const setupNavigationGuards = (router: Router) => {
   router.beforeEach((to, from, next) => {
-    if (to.path !== from.path) {
-      window.$loadingBar?.start()
-    }
     const app = useAppStore()
     app.showSettingPage = false
     app.showSideNavbar = false
-    handlePagePermission(to, from, next)
+
+    const path = to.path.split('/')[1]
+    if (!adminRouter.includes(path)) {
+      if (to.path !== from.path) {
+        window.$loadingBar?.start()
+      }
+      next()
+    } else {
+      if (!app.user) {
+        window.$message?.error('请先登录')
+      } else {
+        if (app.user.role !== 'ADMIN') {
+          window.$message?.error('没有权限访问本页面')
+        }
+      }
+      next(from.path)
+    }
   })
 
   router.afterEach((to, from) => {

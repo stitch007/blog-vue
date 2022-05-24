@@ -13,7 +13,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <Dialog v-model:show="app.showSettingPage">
+  <NModal v-model:show="app.showSettingPage">
     <Card w="80 md:100">
       <Tabs v-model:active="currentTabIndex" justify="children:center">
         <TabPanel name="设置">
@@ -34,5 +34,5 @@ watchEffect(() => {
         </TabPanel>
       </Tabs>
     </Card>
-  </Dialog>
+  </NModal>
 </template>
