@@ -88,9 +88,9 @@ export const dropdownOptions = menus.map((menu) => {
         RouterLink, {
           class: 'inline-block px-1.5 py-0.5 text-gray-600 dark:text-gray-200',
           to: child.path!,
-        }, h(Shrink, {
+        }, () => h(Shrink, {
           class: 'flex items-center px-3 py-1 hover:text-white',
-        }, [
+        }, () => [
           h('div', { class: child.icon }),
           h('div', { class: 'pl-1 text-base font-medium' }, child.text),
         ]),
