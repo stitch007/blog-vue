@@ -10,27 +10,6 @@ export interface NavMenu {
 
 export const menus: NavMenu[] = [
   {
-    icon: 'i-mdi:function-variant',
-    text: '功能',
-    children: [
-      {
-        icon: 'i-mdi:home',
-        text: '首页',
-        path: '/',
-      },
-      {
-        icon: 'i-mdi:pen',
-        text: '留言',
-        path: '/message',
-      },
-      {
-        icon: 'i-mdi:jellyfish',
-        text: '友链',
-        path: '/friends',
-      },
-    ],
-  },
-  {
     icon: 'i-mdi:archive',
     text: '文库',
     children: [
@@ -58,7 +37,7 @@ export const menus: NavMenu[] = [
   },
   {
     icon: 'i-mdi:github-face',
-    text: '生活',
+    text: '分享',
     children: [
       {
         icon: 'i-mdi:camera',
@@ -70,12 +49,22 @@ export const menus: NavMenu[] = [
         text: '歌单',
         path: '/music',
       },
+      {
+        icon: 'i-mdi:jellyfish',
+        text: '友链',
+        path: '/friends',
+      },
     ],
   },
   {
     icon: 'i-mdi:information',
-    text: '关于',
+    text: '我的',
     children: [
+      {
+        icon: 'i-mdi:pen',
+        text: '留言',
+        path: '/message',
+      },
       {
         icon: 'i-mdi:star',
         text: '本站',
