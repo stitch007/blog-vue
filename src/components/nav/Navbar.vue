@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import type { StyleValue } from 'vue'
+import { Index } from 'flexsearch'
 import { dropdownOptions, menus } from './data'
-import { useAppStore, useThemeStore } from '@/stores'
+import { useAppStore, useLibraryStore, useThemeStore } from '@/stores'
 
 const app = useAppStore()
+const lib = useLibraryStore()
 const theme = useThemeStore()
+const router = useRouter()
 
 const navbarStyle = computed((): StyleValue => {
   return {
@@ -14,6 +17,38 @@ const navbarStyle = computed((): StyleValue => {
       : '',
   }
 })
+
+const flexSearch = new Index({ tokenize: 'full' })
+const showSearchModal = ref(false)
+const searchKey = ref('')
+const searchResult = ref<number[]>([])
+
+const onResultItemClick = (id: number) => {
+  showSearchModal.value = false
+  const title = lib.articles.find(item => item.id === id)?.title
+  title && router.push(`/articles/${title}`)
+}
+
+const getResultItemText = (id: number) => {
+  const title = lib.articles.find(item => item.id === id)?.title
+  if (title) {
+    return title.replace(searchKey.value, `<em text="$primary-color" not-italic>${searchKey.value}</em>`)
+  }
+  return '文章不存在'
+}
+
+watchEffect(() => {
+  lib.articles.forEach((item) => {
+    const reg = /[\\\`\*\_\[\]\#\+\-\!\>]/g
+    const text = item.content.replace(reg, '')
+    flexSearch.add(item.id, item.title + text)
+  })
+})
+
+watch(searchKey, useThrottleFn(() => {
+  console.log(flexSearch)
+  searchResult.value = flexSearch.search(searchKey.value) as number[]
+}, 300, false))
 </script>
 
 <template>
@@ -89,7 +124,36 @@ const navbarStyle = computed((): StyleValue => {
         </div>
         <!-- 右边 搜索,切换深浅模式和AppBar(小于md显示) -->
         <div flex items-center>
-          <Shrink p="x2 y2" cursor-pointer>
+          <NModal v-model:show="showSearchModal">
+            <Card
+              pos="fixed top-25 left-[calc(50%-10rem)] md:left-[calc(50%-15rem)]"
+              w="80 md:120"
+              p6
+            >
+              <div pb-4 text="xl $primary-color" font-bold>
+                搜索
+              </div>
+              <NInput v-model:value="searchKey" placeholder="开始搜索吧..." rounded-xl />
+              <hr mt-4 border="2 dashed $primary-color" opacity-70>
+              <div max-h-300px>
+                <div
+                  v-for="(id, index) in searchResult"
+                  :key="id"
+                  :class="{'mt-4': index === 0}"
+                  items-center
+                  py-1
+                  text="hover:$primary-color"
+                  font-bold
+                  cursor-pointer
+                  duration-300
+                  line-clamp-1
+                  @click="onResultItemClick(id)"
+                  v-html="getResultItemText(id)"
+                />
+              </div>
+            </Card>
+          </NModal>
+          <Shrink p="x2 y2" cursor-pointer @click="showSearchModal = true">
             <div i-fa6-solid:magnifying-glass />
           </Shrink>
           <Shrink
