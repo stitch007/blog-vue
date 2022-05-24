@@ -11,12 +11,7 @@ import 'prismjs/components/prism-javascript'
 const toc = ref('')
 
 const md = MarkdownIt()
-  .use(markdownItAnchor, {
-    permalink: true,
-    permalinkBefore: true,
-    permalinkSymbol: '#',
-    level: [1, 2, 3],
-  })
+  .use(markdownItAnchor)
   .use(markdownItTocDoneRight, {
     containerClass: 'toc-container',
     level: [1, 2, 3],
