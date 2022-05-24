@@ -16,7 +16,7 @@ export const menus: NavMenu[] = [
       {
         icon: 'i-mdi:home',
         text: '首页',
-        path: '/home',
+        path: '/',
       },
       {
         icon: 'i-mdi:pen',
