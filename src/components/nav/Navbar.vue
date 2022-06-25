@@ -46,7 +46,6 @@ watchEffect(() => {
 })
 
 watch(searchKey, useThrottleFn(() => {
-  console.log(flexSearch)
   searchResult.value = flexSearch.search(searchKey.value) as number[]
 }, 300, false))
 </script>
