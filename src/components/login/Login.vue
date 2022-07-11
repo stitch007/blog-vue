@@ -155,7 +155,7 @@ onMounted(() => onCaptchaClick())
       </NDivider>
       <div flex justify-center mt-2>
         <a href="#" flex items-center>
-          <div i-mdi:wechat text="[#07c160]" />
+          <div i-ic:round-wechat text="[#07c160]" />
           <span pl-1>微信</span>
         </a>
       </div>

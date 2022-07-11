@@ -29,7 +29,7 @@ const lib = useLibraryStore()
         v-for="[year, count] in lib.archives" :key="year"
         class="group" p="x3 y1" duration-300
         bg="hover:$primary-color" border="~ gray-200 dark:gray-700 rounded-lg"
-        @click="$router.push({ path: 'articles', hash: `#${year}` })"
+        @click="$router.push({ path: '/articles', hash: `#${year}` })"
       >
         <div text="sm gray-800 dark:gray-50 group-hover:gray-50" opacity-60>
           {{ year }}
