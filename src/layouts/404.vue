@@ -1,16 +1,18 @@
 <script setup lang="ts">
+import { NButton } from 'naive-ui'
+import { useAppStore } from '@/stores'
+
+const app = useAppStore()
 </script>
 
 <template>
-  <main p="x4 y10" text="center teal-700 dark:gray-200">
-    <div text-4xl>
-      <div i-fa6-solid:person-falling-burst inline-block />
-    </div>
-    <router-view />
-    <div>
-      <button text-sm m="3 t8" @click="$router.replace('/')">
-        回到首页
-      </button>
-    </div>
-  </main>
+  <div flex flex-col items-center mt20>
+    <RouterView />
+    <NButton
+      :color="app.theme.primaryColor" text-color="white"
+      bg="$primary-color" rounded-md @click="$router.replace('/')"
+    >
+      回到首页
+    </NButton>
+  </div>
 </template>

@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { NButton, NDivider, NForm, NFormItem, NInput } from 'naive-ui'
 import type { FormInst, FormItemRule, FormRules } from 'naive-ui'
+import { onDeactivated, onMounted, ref } from 'vue'
 import type { Login } from '@/service'
 import { getCaptchaUrl, login, setToken } from '@/service'
-import { useAppStore, useThemeStore } from '@/stores'
+import { useAppStore } from '@/stores'
 
 const app = useAppStore()
-const theme = useThemeStore()
 
 const formEl = ref<HTMLElement & FormInst>()
 const model = ref<Login>({ username: '', password: '', code: '' })
@@ -133,7 +134,7 @@ onMounted(() => onCaptchaClick())
     <!-- 提交表单按钮 -->
     <NButton
       round
-      :color="theme.common.primaryColor"
+      :color="app.theme.primaryColor"
       text-color="white"
       w-full
       bg="$primary-color"

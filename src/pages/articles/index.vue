@@ -1,82 +1,61 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import BasicLayout from '@/components/layouts/BasicLayout.vue'
+import Toolbar from '@/components/navigation/Toolbar.vue'
+import ArticleCard from '@/components/articles/ArticleCard.vue'
+import HomeSide from '@/components/home/HomeSide.vue'
 import { useLibraryStore } from '@/stores'
+import { changeTitle } from '@/composables'
+import Card from '@/components/common/Card.vue'
 
 const lib = useLibraryStore()
-useTitle('全部文章 | Stitch\'s BLOG')
+changeTitle('全部文章')
 
-const showYear = (() => {
-  const set = new Set<number>()
-  return (time: Date) => {
-    const year = time.getFullYear()
-    if (!set.has(year)) {
-      set.add(year)
-      return true
-    }
-    return false
+// map { article.id => year }
+const createTimeMap = computed(() => {
+  const map = new Map<number, number>()
+  lib.articles.forEach(article => map.set(article.id, new Date(article.createTime).getFullYear()))
+  return map
+})
+
+// 年份只显示一次
+const seen = new Set<number>()
+const shouldShowYear = (id: number) => {
+  const year = createTimeMap.value.get(id)
+  if (year && !seen.has(year)) {
+    seen.add(year)
+    return true
   }
-})()
+  return false
+}
 </script>
 
 <template>
-  <main max-w-1200px m="xauto t-20" p="x2 md:x8">
-    <Card p="x6 y6 md:x12 md:y10">
-      <div
-        class="title"
-        relative
-        p="l4 b4 md:(l5 b6)"
-        text="2xl"
-      >
-        {{ '文章总览 - ' + lib.articles.length }}
+  <BasicLayout>
+    <template #left>
+      <Toolbar :title="`全部文章 - ${lib.articles.length}`" />
+      <Card bordered>
+        <div v-for="article in lib.articles" :key="article.id">
+          <!-- 年份 只显示一次 -->
+          <h1
+            v-if="shouldShowYear(article.id)"
+            :title="createTimeMap.get(article.id)?.toString()"
+            mb2 text="xl center $primary-color" font-bold
+          >
+            {{ createTimeMap.get(article.id) }}
+          </h1>
+          <ArticleCard :article="article" m="x2 md:x8 y2" />
+        </div>
+      </Card>
+    </template>
+    <template #right>
+      <div h13 />
+      <div sticky top-4>
+        <HomeSide />
       </div>
-      <div
-        v-for="(article, index) in lib.articles"
-        :key="article.id"
-        :class="{'pt-4' : index !== 0}"
-        relative
-        p="l6 md:l8"
-      >
-        <h1
-          v-if="showYear(new Date(article.createTime))"
-          :title="new Date(article.createTime).getFullYear().toString()"
-          text="xl dark-50 dark:gray-200"
-          pb-4
-        >
-          {{ new Date(article.createTime).getFullYear() }}
-        </h1>
-        <ArticleCard :article="article" />
-      </div>
-    </Card>
-  </main>
+    </template>
+  </BasicLayout>
 </template>
-
-<style scoped>
-.title::before, .title ~ div::before {
-  position: absolute;
-  content: "";
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 0.1rem;
-  background-color: var(--primary-color);
-  opacity: 0.8;
-}
-
-.title::before {
-  top: 1.5rem;
-}
-
-.title::after {
-  position: absolute;
-  content: "";
-  top: 0.5rem;
-  left: -0.45rem;
-  width: 1rem;
-  height: 1rem;
-  border: 0.25rem solid var(--primary-color);
-  border-radius: 0.5rem;
-  opacity: 0.8;
-}
-</style>
 
 <route lang="yaml">
 meta:

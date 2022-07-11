@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import randomColor from 'randomcolor'
+import BasicLayout from '@/components/layouts/BasicLayout.vue'
+import Toolbar from '@/components/navigation/Toolbar.vue'
+import HomeSide from '@/components/home/HomeSide.vue'
 import { useLibraryStore } from '@/stores'
+import { changeTitle } from '@/composables'
+import Card from '@/components/common/Card.vue'
 
 const lib = useLibraryStore()
-useTitle('全部标签 | Stitch\'s BLOG')
+changeTitle('全部标签')
 
 const styles = (num: number) => {
   return {
@@ -14,30 +19,29 @@ const styles = (num: number) => {
 </script>
 
 <template>
-  <main max-w-1200px m="xauto t-20" p="x2 md:x8">
-    <Card p="x2 y6 md:x18" text-center>
-      <div w-full text-2xl pb-4>
-        {{ '标签 - ' + lib.sameTagArticles.length }}
-      </div>
-      <div>
+  <BasicLayout>
+    <template #left>
+      <Toolbar :title="`全部标签 - ${lib.tags.length}`" />
+      <Card bordered text-center>
         <RouterLink
-          v-for="tag in lib.sameTagArticles"
-          :key="tag.tag.id"
-          :to="`/tags/${tag.tag.name}`"
-          :style="styles(tag.articles.length)"
-          hover="!bg-$primary-color !text-gray-100 scale-108"
-          inline-block
-          m="x2 y2"
-          p="x2 md:x4"
-          bg="zinc-100 dark:zinc-900"
-          leading-loose
-          rounded-xl
-          duration-300
+          v-for="tag in lib.sameTagArticles" :key="tag.tag.id" :to="`/tags/${tag.tag.id}`"
+          :style="styles(tag.articles.length)" inline-block
+          hover="!bg-$primary-color !text-gray-100 scale-108" m="x2 y2" p="x2 md:x4"
+          bg="zinc-100 dark:zinc-900" leading-loose rounded-xl duration-300
         >
           <span>{{ tag.tag.name }}</span>
           <sup>{{ tag.articles.length }}</sup>
         </RouterLink>
-      </div>
-    </Card>
-  </main>
+      </Card>
+    </template>
+    <template #right>
+      <div h13 />
+      <HomeSide />
+    </template>
+  </BasicLayout>
 </template>
+
+<route lang="yaml">
+meta:
+  layout: default
+</route>

@@ -4,6 +4,7 @@ import type { Router } from 'vue-router'
 import generatedRoutes from 'virtual:generated-pages'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { useAppStore } from '@/stores'
+import { changeTitle } from '@/composables'
 
 const routes = setupLayouts(generatedRoutes)
 
@@ -15,13 +16,16 @@ const router = createRouter({
   },
 })
 
-const adminRouter = ['editor']
+const adminRouter = ['create']
 
+/**
+ * 初始化路由守卫
+ */
 const setupNavigationGuards = (router: Router) => {
   router.beforeEach((to, from, next) => {
     const app = useAppStore()
     app.showSettingPage = false
-    app.showSideNavbar = false
+    app.showSidebar = false
 
     const path = to.path.split('/')[1]
     if (!adminRouter.includes(path)) {
@@ -32,21 +36,26 @@ const setupNavigationGuards = (router: Router) => {
     } else {
       if (!app.user) {
         window.$message?.error('请先登录')
+        return
       } else {
         if (app.user.role !== 'ADMIN') {
           window.$message?.error('没有权限访问本页面')
+          return
         }
       }
-      next(from.path)
+      next()
     }
   })
 
   router.afterEach((to, from) => {
     window.$loadingBar?.finish()
-    to.meta?.title && useTitle(to.meta.title as string)
+    to.meta?.title && changeTitle(to.meta.title as string)
   })
 }
 
+/**
+ * 初始化路由
+ */
 export const setupRouter = async (app: App) => {
   app.use(router)
   setupNavigationGuards(router)

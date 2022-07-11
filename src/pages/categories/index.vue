@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed, onMounted, ref, watch } from 'vue'
 import * as echarts from 'echarts/core'
 import type { PieSeriesOption } from 'echarts/charts'
 import { PieChart } from 'echarts/charts'
@@ -11,7 +12,14 @@ import {
   ToolboxComponent,
   TooltipComponent,
 } from 'echarts/components'
-import { useAppStore, useLibraryStore, useThemeStore } from '@/stores'
+import { breakpointsTailwind, useBreakpoints, useEventListener } from '@vueuse/core'
+import { useRouter } from 'vue-router'
+import BasicLayout from '@/components/layouts/BasicLayout.vue'
+import HomeSide from '@/components/home/HomeSide.vue'
+import Toolbar from '@/components/navigation/Toolbar.vue'
+import { useAppStore, useLibraryStore } from '@/stores'
+import { changeTitle } from '@/composables'
+import Card from '@/components/common/Card.vue'
 
 type EChartsOption = echarts.ComposeOption<ToolboxComponentOption | LegendComponentOption | PieSeriesOption>
 
@@ -25,11 +33,13 @@ echarts.use([
   LabelLayout,
 ])
 
-const lib = useLibraryStore()
+changeTitle('全部分类')
+
 const app = useAppStore()
-const theme = useThemeStore()
+const lib = useLibraryStore()
 const router = useRouter()
-useTitle('全部分类 | Stitch\'s BLOG')
+
+const smallerThanMd = useBreakpoints(breakpointsTailwind).smaller('md')
 
 const chartEl = ref<HTMLElement>()
 let chart: echarts.ECharts
@@ -38,15 +48,15 @@ const option = computed((): EChartsOption => {
   return {
     backgroundColor: 'transparent',
     legend: {
-      top: app.smallerThanMd ? 'bottom' : undefined,
-      right: app.smallerThanMd ? undefined : 'right',
+      top: smallerThanMd.value ? 'bottom' : undefined,
+      right: smallerThanMd.value ? undefined : 'right',
     },
     series: [
       {
         name: '全部分类',
         type: 'pie',
-        radius: app.smallerThanMd ? [15, 80] : [40, 150],
-        center: app.smallerThanMd ? ['50%', '40%'] : ['50%', '50%'],
+        radius: smallerThanMd.value ? [15, 80] : [40, 120],
+        center: smallerThanMd.value ? ['50%', '40%'] : ['50%', '50%'],
         roseType: 'area',
         itemStyle: {
           borderRadius: 8,
@@ -65,14 +75,14 @@ const option = computed((): EChartsOption => {
   }
 })
 
-watch(lib.categories, () => {
+watch(() => lib.categories, () => {
   chart.setOption(option.value)
 })
 
-watch(() => theme.isDark, () => {
+watch(() => app.isDark, () => {
   if (chartEl.value) {
     chart.dispose()
-    chart = echarts.init(chartEl.value, theme.isDark ? 'dark' : undefined)
+    chart = echarts.init(chartEl.value, app.isDark ? 'dark' : undefined)
     chart.setOption(option.value)
   }
 })
@@ -84,22 +94,34 @@ useEventListener(window, 'resize', () => {
 
 onMounted(() => {
   if (chartEl.value) {
-    chart = echarts.init(chartEl.value, theme.isDark ? 'dark' : undefined)
+    chart = echarts.init(chartEl.value, app.isDark ? 'dark' : undefined)
     chart.setOption(option.value)
     chart.on('click', (params) => {
-      router.push(`/categories/${params.name}`)
+      const category = lib.categories.find(category => category.name === params.name)
+      router.push(`/categories/${category?.id}`)
     })
   }
 })
 </script>
 
 <template>
-  <main max-w-1200px m="xauto t-20" p="x2 md:x8">
-    <Card p="x8 y6">
-      <div text-2xl>
-        全部分类
+  <BasicLayout>
+    <template #left>
+      <Toolbar :title="`全部分类 - ${lib.categories.length}`" />
+      <Card bordered>
+        <div ref="chartEl" h="80 md:100" />
+      </Card>
+    </template>
+    <template #right>
+      <div h13 />
+      <div sticky top-4>
+        <HomeSide />
       </div>
-      <div ref="chartEl" h="80 md:100" h-100 />
-    </Card>
-  </main>
+    </template>
+  </BasicLayout>
 </template>
+
+<route lang="yaml">
+meta:
+  layout: default
+</route>

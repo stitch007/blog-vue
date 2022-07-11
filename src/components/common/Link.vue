@@ -6,12 +6,10 @@ const links = [
 </script>
 
 <template>
-  <a
-    v-for="(link, index) in links"
-    :key="index"
-    :class="link.icon"
-    :href="link.href"
-    target="_blank"
-    inline-block
-  />
+  <div flex text-lg>
+    <a
+      v-for="(link, index) in links" :key="index" :class="link.icon"
+      :href="link.href" target="_blank" mx2 inline-block
+    />
+  </div>
 </template>

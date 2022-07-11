@@ -1,7 +1,7 @@
 /* see https://github.com/antfu/prism-theme-vars */
 html:not(.dark) {
   --prism-foreground: #393a34;
-  --prism-background: #fbfbfb;
+  --prism-background: #f9f9f9;
   --prism-comment: #a0ada0;
   --prism-string: #b56959;
   --prism-literal: #2f8a89;
@@ -94,8 +94,8 @@ html.dark {
   --prism-marker-font-size: 0.8em;
 
   /* Font */
-  --prism-font-size: 1em;
-  --prism-line-height: 1.5em;
+  --prism-font-size: 0.875em;
+  --prism-line-height: 1.3em;
   --prism-font-family: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
   --prism-inline-font-size: var(--prism-font-size);
   --prism-block-font-size: var(--prism-font-size);

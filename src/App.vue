@@ -1,7 +1,6 @@
 <script setup lang="ts">
+import NaiveProvider from '@/components/provider/NaiveProvider.vue'
 import { useLibraryStore } from '@/stores'
-
-document.body.addEventListener('touchstart', () => {})
 
 useLibraryStore().fetchData()
 </script>
