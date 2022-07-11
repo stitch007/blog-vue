@@ -25,18 +25,15 @@ const Toc = defineComponent({
         {props.toc?.map((item, index) => (
           <li key={index} class="my1">
             <div
-              class={item.active && 'bg-$primary-color !text-white'}
-              p="x3 y0.5"
-              text="base hover:$primary-color"
-              rounded="md"
-              cursor="pointer"
-              duration="300"
-              line-clamp="1"
+              class={[
+                item.active && 'bg-$primary-color !text-white',
+                'px3 py0.5 text-base hover:text-$primary-color rounded-md cursor-pointer duration-300 line-clamp-1',
+              ]}
               onClick={() => scrollTo(item.offsetTop)}
             >
               {item.name}
             </div>
-            {item.children && <Toc toc={item.children} p="l4" />}
+            {item.children && <Toc toc={item.children} class="pl4" />}
           </li>
         ))}
       </ul>
