@@ -2,7 +2,7 @@ import { useTitle } from '@vueuse/core'
 
 const titleRef = useTitle()
 
-const suffix = ' | Stitch\'s BLOG\''
+const suffix = ' | Stitch\'s BLOG'
 
 /**
  * 修改网页标题为 title + suffix

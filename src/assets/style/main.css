@@ -34,7 +34,3 @@ body::-webkit-scrollbar-corner {
 input::-ms-clear, input::-ms-reveal{
   display: none;
 }
-
-.dark img {
-  filter: blur(0px) brightness(0.8);
-}
