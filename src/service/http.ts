@@ -1,6 +1,6 @@
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 import axios from 'axios'
-import axiosRetry from 'axios-retry'
+import { router } from '@/router'
 
 export interface ResponseData<T = any> {
   code: number
@@ -13,78 +13,75 @@ class Http {
 
   constructor(config?: AxiosRequestConfig) {
     this.instance = axios.create(config)
-    axiosRetry(this.instance, { retries: 3 })
-    const user = localStorage.getItem('user')
-    if (user) {
-      this.setToken(JSON.parse(user).token ?? '')
-    }
+    this.setInterceptor()
   }
 
-  setToken(token: string) {
-    this.instance.defaults.headers.common.Authorization = token
+  private setInterceptor() {
+    this.instance.interceptors.request.use(
+      (config) => {
+        const token = localStorage.getItem('token')
+        if (token !== null && config.headers) {
+          config.headers.Authorization = (token)
+        }
+        return config
+      },
+      (error) => {
+        console.error(error)
+        window.$message?.error('发生未知错误')
+        return Promise.reject(error)
+      },
+    )
+    this.instance.interceptors.response.use(
+      (response) => {
+        const { status, data } = response
+        if (status === 200) {
+          return data
+        }
+        window.$message?.error('发生未知错误')
+        return Promise.reject(response.data)
+      },
+      (error) => {
+        console.error(error)
+        window.$message?.error('发生未知错误')
+        return Promise.reject(error)
+      },
+    )
   }
 
   async request<T = any>(url: string, config?: AxiosRequestConfig) {
-    let response: AxiosResponse<any, any>
     try {
-      response = await this.instance.request({ url, ...config })
+      const response: ResponseData<T> = await this.instance.request({ url, ...config })
+      if (response.code === 20000) {
+        return response.data
+      } else if (response.code === 40100) {
+        router.push('/login')
+        window.$message?.error('请先登录')
+      } else {
+        window.$message?.error(response.message)
+      }
     } catch (error) {
-      console.error('网络请求错误', error)
-      window.$message?.error('好像没连上网网~')
       return null
     }
-    return response.data as ResponseData<T>
-  }
-
-  async get<T>(url: string, config?: AxiosRequestConfig) {
-    const response = await this.request<T>(url, { method: 'GET', ...config })
-    if (response !== null) {
-      if (response.code !== 200) {
-        window.$message?.error(response.message)
-        return null
-      }
-      return response.data
-    }
     return null
   }
 
-  async post<T>(url: string, data?: any, config?: AxiosRequestConfig) {
-    const response = await this.request<T>(url, { method: 'POST', data, ...config })
-    if (response !== null) {
-      if (response.code !== 200) {
-        window.$message?.error(response.message)
-        return null
-      }
-      return response.data
-    }
-    return null
+  async get<T = any>(url: string, config?: AxiosRequestConfig) {
+    return await this.request<T>(url, { method: 'GET', ...config })
   }
 
-  async put<T>(url: string, data?: any, config?: AxiosRequestConfig) {
-    const response = await this.request<T>(url, { method: 'PUT', data, ...config })
-    if (response !== null) {
-      if (response.code !== 200) {
-        window.$message?.error(response.message)
-        return null
-      }
-      return response.data
-    }
-    return null
+  async post<T = any>(url: string, data?: any, config?: AxiosRequestConfig) {
+    return await this.request<T>(url, { method: 'POST', data, ...config })
   }
 
-  async delete<T>(url: string, config?: AxiosRequestConfig) {
-    const response = await this.request<T>(url, { method: 'DELETE', ...config })
-    if (response !== null) {
-      if (response.code !== 200) {
-        window.$message?.error(response.message)
-        return null
-      }
-      return response.data
-    }
-    return null
+  async put<T = any>(url: string, data?: any, config?: AxiosRequestConfig) {
+    return await this.request<T>(url, { method: 'PUT', data, ...config })
+  }
+
+  async delete<T = any>(url: string, config?: AxiosRequestConfig) {
+    return await this.request<T>(url, { method: 'DELETE', ...config })
   }
 }
 
 export const http = new Http({
-  baseURL: 'http://114.132.223.202:9231',
+  baseURL: import.meta.env.VITE_BASE_URL,
 })

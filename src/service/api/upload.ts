@@ -3,17 +3,10 @@ import { http } from '../http'
 export const uploadImage = async (image: File) => {
   const formData = new FormData()
   formData.append('file', image)
-  const response = await http.request('/upload/image', {
+  const data = await http.request<Record<'url', string>>('/upload/image', {
     method: 'POST',
     headers: { 'Content-Type': 'multipart/form-data' },
     data: formData,
   })
-  if (!response) {
-    return null
-  }
-  if (response.code !== 200) {
-    window.$message?.error(`上传图片失败: ${response.message}`)
-    return null
-  }
-  return response.data as Record<'url', string>
+  return data ? data.url : null
 }

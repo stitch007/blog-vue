@@ -8,24 +8,18 @@ export interface Article {
   tags: Tag[]
   title: string
   content: string
-  summary: string
-  coverImage: string
   createTime: Date
   updateTime: Date
 }
 
-export interface SaveArticleParams {
+export interface SaveArticleParam {
   title: string
   content: string
-  summary: string
-  coverImage: string
-  category: Record<'name', string>
-  tags: Record<'name', string>[]
-  createTime?: Date
-  updateTime?: Date
+  category: Partial<Category>
+  tags: Partial<Tag>[]
 }
 
-export type UpdateArticleParams = Record<'id', number> & Partial<SaveArticleParams>
+export type UpdateArticleParam = Record<'id', number> & SaveArticleParam
 
 export const getArticles = () => {
   return http.get<Article[]>('/articles')
@@ -39,12 +33,12 @@ export const getArticleByTitle = (title: string) => {
   return http.get<Article>('/articles', { params: { title } })
 }
 
-export const saveArticle = (article: SaveArticleParams) => {
-  return http.post<Record<'id', number>>('/articles', article)
+export const saveArticle = (param: SaveArticleParam) => {
+  return http.post<Record<'id', number>>('/articles', param)
 }
 
-export const updateArticle = (article: UpdateArticleParams) => {
-  return http.put<Record<'id', number>>('/articles', article)
+export const updateArticle = (param: UpdateArticleParam) => {
+  return http.put<Record<'id', number>>('/articles', param)
 }
 
 export const deleteArticles = (ids: number[]) => {
