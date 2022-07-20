@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { NButton } from 'naive-ui'
+import { NButton, NDropdown } from 'naive-ui'
 import Background from '@/components/common/Background.vue'
 import Sidebar from '@/components/navigation/Sidebar.vue'
 import RightSideMenu from '@/components/navigation/RightSideMenu.vue'
-import Setting from '@/components/login/Setting.vue'
 import Shrink from '@/components/common/Shrink.vue'
 import { useAppStore } from '@/stores'
+import { logout } from '@/service'
 
 const app = useAppStore()
 
@@ -14,34 +14,44 @@ const navOptions = [
     icon: 'i-ic:round-home',
     text: '首页',
     path: '/',
-    key: 0,
   },
   {
     icon: 'i-ic:round-article',
     text: '文章',
     path: '/articles',
-    key: 1,
   },
   {
     icon: 'i-ic:round-tag',
     text: '标签',
     path: '/tags',
-    key: 2,
   },
   {
     icon: 'i-ic:round-category',
     text: '分类',
     path: '/categories',
-    key: 3,
   },
 ]
+
+const options = [
+  {
+    label: '退出登录',
+    key: 'logout',
+  },
+]
+
+const handleSelect = (key: string | number) => {
+  if (key === 'logout') {
+    logout().then(() => {
+      app.clearUser()
+    })
+  }
+}
 </script>
 
 <template>
   <Background />
   <Sidebar />
   <RightSideMenu />
-  <Setting />
   <div flex bg="blue-gray-50 dark:transparent" text="gray-700 dark:white">
     <header hidden md:flex justify-end lg:grow lg:shrink>
       <div w16 xl:w64>
@@ -63,7 +73,7 @@ const navOptions = [
             </div>
           </a>
           <Shrink
-            v-for="option in navOptions" :key="option.key"
+            v-for="(option, index) in navOptions" :key="index"
             class="group"
             text="gray-700 dark:gray-200"
             m="xauto xl:l2 xl:r8 b2" p="x2 y2" xl:pl-4
@@ -77,19 +87,24 @@ const navOptions = [
           </Shrink>
           <NButton
             v-if="!app.isLogin"
-            :color="app.theme.primaryColor"
-            m="t4 l4 r6" bg="$primary-color" text-color="white" rounded-md
-            @click="app.showSettingPage = true"
+            :color="app.theme.primaryColor" text-color="white"
+            hidden xl:flex m="t4 l4 r6" bg="$primary-color" rounded-md
+            @click="$router.push('/login')"
           >
             登录
           </NButton>
           <div v-else grow flex flex-col justify-end>
-            <div flex m="xauto y2 xl:2" p="x2 y4">
-              <img src="https://image-1304160910.file.myqcloud.com/avatar.jpg" alt="avatar" w10 h10 rounded-xl>
-              <div hidden xl:block pl2 text-base>
-                {{ app.user?.username }}
+            <NDropdown trigger="click" :options="options" @select="handleSelect">
+              <div
+                flex m="xauto y4 xl:4" p="1 xl:2" rounded-xl cursor-pointer
+                bg="hover:slate-100 hover:dark:slate-800" duration-300
+              >
+                <img :src="app.user.avatarUrl" alt="avatar" w10 h10 rounded-xl>
+                <div hidden xl:block pl2 text-base>
+                  {{ app.user?.username }}
+                </div>
               </div>
-            </div>
+            </NDropdown>
           </div>
         </div>
       </div>

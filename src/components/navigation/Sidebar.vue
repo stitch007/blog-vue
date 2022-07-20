@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { NDrawer } from 'naive-ui'
+import { NDrawer, NDropdown } from 'naive-ui'
 import { ref } from 'vue'
 import LibraryCount from '../articles/LibraryCount.vue'
 import Link from '../common/Link.vue'
 import Card from '../common/Card.vue'
 import { useAppStore } from '@/stores'
+import { logout } from '@/service'
+import DefaultAvatar from '@/assets/img/default-avatar.png'
 
 const app = useAppStore()
 
@@ -16,27 +18,38 @@ const navOptions = [
     icon: 'i-ic:round-home',
     text: '首页',
     path: '/',
-    key: 0,
   },
   {
     icon: 'i-ic:round-article',
     text: '文章',
     path: '/articles',
-    key: 1,
   },
   {
     icon: 'i-ic:round-tag',
     text: '标签',
     path: '/tags',
-    key: 2,
   },
   {
     icon: 'i-ic:round-category',
     text: '分类',
     path: '/categories',
-    key: 3,
   },
 ]
+
+const options = [
+  {
+    label: '退出登录',
+    key: 'logout',
+  },
+]
+
+const handleSelect = (key: string | number) => {
+  if (key === 'logout' && app.user.avatarUrl) {
+    logout().then(() => {
+      app.clearUser()
+    })
+  }
+}
 </script>
 
 <template>
@@ -49,7 +62,9 @@ const navOptions = [
   >
     <!-- 头像 -->
     <div m="xauto y4" w16 h16>
-      <img src="https://image-1304160910.file.myqcloud.com/avatar.jpg" alt="avatar" rounded-xl>
+      <NDropdown trigger="click" :options="options" @select="handleSelect">
+        <img :src="app.user.avatarUrl || DefaultAvatar" alt="avatar" rounded-xl>
+      </NDropdown>
     </div>
     <Card p="x8 t2" flex flex-col>
       <LibraryCount />
@@ -66,7 +81,7 @@ const navOptions = [
     </div>
     <!-- menus -->
     <div class="menu" px6>
-      <div v-for="option in navOptions" :key="option.key" text="gray-600 dark:gray-200">
+      <div v-for="(option, index) in navOptions" :key="index" text="gray-600 dark:gray-200">
         <RouterLink :to="option.path" flex items-center w-full py2 my2>
           <div :class="option.icon" text-xl />
           <div pl4 text-base font-bold>

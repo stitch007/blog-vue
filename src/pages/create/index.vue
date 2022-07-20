@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import { NButton } from 'naive-ui'
 import { storeToRefs } from 'pinia'
+import { useRoute, useRouter } from 'vue-router'
 import BasicLayout from '@/components/layouts/BasicLayout.vue'
 import Toolbar from '@/components/navigation/Toolbar.vue'
 import DynamicTags from '@/components/common/DynamicTags.vue'
@@ -9,19 +10,65 @@ import HomeSide from '@/components/home/HomeSide.vue'
 import { useAppStore, useLibraryStore } from '@/stores'
 import { useEditor } from '@/composables'
 import Card from '@/components/common/Card.vue'
+import type { Article } from '@/service'
+import { saveArticle } from '@/service'
 
 const { theme, isDark } = storeToRefs(useAppStore())
+const router = useRouter()
+const route = useRoute()
 const lib = useLibraryStore()
+const article = ref<Article | null>(null)
 
-const title = ref('')
-const categories = ref<string[]>([])
-const tags = ref<string[]>([])
+if (route.query.id) {
+  const id = route.query.id.toString()
+  const item = lib.articles.find(item => item.id.toString() === id)
+  if (item) {
+    article.value = item
+  }
+}
+
+const state = reactive({
+  title: article.value ? article.value.title : '',
+  categories: article.value ? [article.value.category.name] : [] as string[],
+  tags: article.value ? article.value.tags.map(item => item.name) : [] as string[],
+  disabled: false,
+})
+
 const categoryOptions = computed(() => lib.categories.map(item => item.name))
 const tagOptions = computed(() => lib.tags.map(item => item.name))
 
-const { editorEl, switchTheme } = useEditor(isDark.value)
+const { editorEl, switchTheme, getMarkdown } = useEditor(isDark.value)
 
 watch(() => isDark, val => switchTheme(val ? 'dark' : 'light'))
+
+const postArticles = () => {
+  if (!state.title) {
+    window.$message?.error('标题不能为空')
+  }
+  const content = getMarkdown()
+  if (!content) {
+    window.$message?.error('内容不能为空')
+  }
+  if (!state.categories.length) {
+    window.$message?.error('分类不能为空')
+  }
+  if (!state.tags.length) {
+    window.$message?.error('标签不能为空')
+  }
+  state.disabled = true
+  saveArticle({
+    title: state.title,
+    content,
+    category: { name: state.categories[0] },
+    tags: state.tags.map(name => ({ name })),
+  }).then(() => {
+    window.$message?.success('文章发布成功')
+    lib.fetchData().then(() => {
+      state.disabled = false
+      router.push('/')
+    })
+  })
+}
 </script>
 
 <template>
@@ -31,8 +78,9 @@ watch(() => isDark, val => switchTheme(val ? 'dark' : 'light'))
       <Card bordered p="x2 y2">
         <div border="b-1px gray-200 dark:opacity-5">
           <input
-            v-model="title" type="text" placeholder="标题"
-            w-full p="x5 y3" text="lg" font-bold outline-none bg="white dark:$dark-bg-color" rounded-md
+            v-model="state.title" type="text" placeholder="标题"
+            w-full p="x5 y3" text="lg" font-bold outline-none
+            bg="white dark:$dark-bg-color" rounded-md
           >
         </div>
         <div ref="editorEl" />
@@ -41,16 +89,22 @@ watch(() => isDark, val => switchTheme(val ? 'dark' : 'light'))
             <div grow p="x2 children:b4" text="dark:gray-200">
               <div flex>
                 <span whitespace-nowrap mr-6>分类</span>
-                <DynamicTags v-model:value="categories" tip="分类" :options="categoryOptions" :max="1" />
+                <DynamicTags
+                  v-model:value="state.categories"
+                  tip="分类" :options="categoryOptions" :max="1"
+                />
               </div>
               <div flex>
                 <span whitespace-nowrap mr-6>标签</span>
-                <DynamicTags v-model:value="tags" tip="标签" :options="tagOptions" :max="8" />
+                <DynamicTags
+                  v-model:value="state.tags"
+                  tip="标签" :options="tagOptions" :max="8"
+                />
               </div>
             </div>
             <NButton
-              :color="theme.primaryColor"
-              bg="$primary-color" text-color="white"
+              :color="theme.primaryColor" text-color="white" :disabled="state.disabled"
+              bg="$primary-color" @click="postArticles"
             >
               发布文章
             </NButton>

@@ -4,11 +4,10 @@ import type { Router } from 'vue-router'
 import generatedRoutes from 'virtual:generated-pages'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { useAppStore } from '@/stores'
-import { changeTitle } from '@/composables'
 
 const routes = setupLayouts(generatedRoutes)
 
-const router = createRouter({
+export const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior: () => {
@@ -24,7 +23,6 @@ const adminRouter = ['create']
 const setupNavigationGuards = (router: Router) => {
   router.beforeEach((to, from, next) => {
     const app = useAppStore()
-    app.showSettingPage = false
     app.showSidebar = false
 
     const path = to.path.split('/')[1]
@@ -34,7 +32,7 @@ const setupNavigationGuards = (router: Router) => {
       }
       next()
     } else {
-      if (!app.user) {
+      if (!app.user.token) {
         window.$message?.error('请先登录')
         return
       } else {
@@ -49,7 +47,6 @@ const setupNavigationGuards = (router: Router) => {
 
   router.afterEach((to, from) => {
     window.$loadingBar?.finish()
-    to.meta?.title && changeTitle(to.meta.title as string)
   })
 }
 

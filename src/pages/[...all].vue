@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import NotFountSvg from '@/assets/svg/404.svg'
+import NotFountSvg from '@/assets/img/404.svg'
 import { changeTitle } from '@/composables'
 
 changeTitle('页面消失了~~')

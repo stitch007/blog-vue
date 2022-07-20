@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import NaiveProvider from '@/components/provider/NaiveProvider.vue'
-import { useLibraryStore } from '@/stores'
+import { useAppStore, useLibraryStore } from '@/stores'
 
+const token = localStorage.getItem('token')
+
+token && token.length > 0 && useAppStore().fetchUserInfo()
 useLibraryStore().fetchData()
 </script>
 

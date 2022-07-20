@@ -1,15 +1,14 @@
 import { defineStore } from 'pinia'
-import { StorageSerializers, useDark, useLocalStorage } from '@vueuse/core'
+import { useDark } from '@vueuse/core'
 import { paramCase } from 'change-case'
 import type { GlobalThemeOverrides } from 'naive-ui'
-import type { Auth } from '@/service'
-
-export type User = Auth & Record<'username', string>
+import type { User } from '@/service'
+import { getUserInfo } from '@/service'
 
 /**
  * 添加 css 变量到 html 中
  */
-export const addCssVarsToHtml = (vars: Record<string, string | Record<'light'|'dark', string>>, isDark: boolean) => {
+export const addCssVarsToHtml = (vars: Record<string, string | Record<'light' | 'dark', string>>, isDark: boolean) => {
   const keys = Object.keys(vars)
   const styles: string[] = []
   keys.forEach((key) => {
@@ -26,10 +25,13 @@ export const useAppStore = defineStore('app-store', {
   state: () => ({
     // 移动端 显示侧边栏
     showSidebar: false,
-    // 显示设置面板
-    showSettingPage: false,
     // 用户信息
-    user: useLocalStorage<User | null>('user', null, { serializer: StorageSerializers.object }),
+    user: <User>{
+      username: '',
+      avatarUrl: '',
+      token: localStorage.getItem('token') || '',
+      role: 'USER',
+    },
     // 主题，会被以css变量的形式添加到html中
     theme: {
       primaryColor: '#425aef',
@@ -49,7 +51,7 @@ export const useAppStore = defineStore('app-store', {
   getters: {
     // 是否登录
     isLogin(): boolean {
-      return !!(this.user && this.user.token)
+      return !!this.user.token
     },
     naiveThemeOverrides(): GlobalThemeOverrides {
       addCssVarsToHtml(this.theme, this.isDark)
@@ -93,7 +95,26 @@ export const useAppStore = defineStore('app-store', {
   actions: {
     // 删除用户
     clearUser() {
-      this.user = null
+      localStorage.removeItem('token')
+      this.$patch((state) => {
+        state.user = {
+          username: '',
+          avatarUrl: '',
+          token: '',
+          role: 'USER',
+        }
+      })
+    },
+    setUser(user: User) {
+      localStorage.setItem('token', user.token)
+      this.$patch((state) => {
+        state.user = user
+      })
+    },
+    fetchUserInfo() {
+      getUserInfo().then((user) => {
+        user && this.setUser(user)
+      })
     },
     // 切换主题
     toggleDark() {

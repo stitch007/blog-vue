@@ -27,9 +27,9 @@ const showSearchModal = ref(false)
     <NButton
       :color="app.theme.primaryColor"
       bg="$primary-color" text-color="white" rounded-md
-      @click="$router.push('/create')"
+      @click="$router.push(app.isLogin ? '/create' : '/login')"
     >
-      写文章
+      {{ app.isLogin ? '写文章' : '登录' }}
     </NButton>
   </nav>
 </template>

@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Article, Category, Tag } from '@/service'
-import { getArticleByTitle, getArticles, getCategories, getTags } from '@/service'
+import { getArticleByTitle, getArticles, getCategories, getTags, logout } from '@/service'
 
 export const useLibraryStore = defineStore('library-store', () => {
   // 文章
@@ -39,10 +39,10 @@ export const useLibraryStore = defineStore('library-store', () => {
 
   // 获取文章，分类和标签
   const fetchData = () => {
-    Promise.all([getArticles(), getCategories(), getTags()]).then((res) => {
-      articles.value = res[0] || []
-      categories.value = res[1] || []
-      tags.value = res[2] || []
+    return Promise.all([getArticles(), getCategories(), getTags()]).then((res) => {
+      articles.value = res[0] ?? []
+      categories.value = res[1] ?? []
+      tags.value = res[2] ?? []
     })
   }
 

@@ -1,16 +1,10 @@
 <script setup lang="ts">
 import { useScroll } from '@vueuse/core'
-import { useAppStore } from '@/stores'
 
 const { y } = useScroll(window)
-const app = useAppStore()
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
-}
-
-const onSettingClick = () => {
-  app.showSettingPage = true
 }
 </script>
 
@@ -31,9 +25,6 @@ const onSettingClick = () => {
         <div i-fa6-solid:arrow-up />
       </div>
     </Transition>
-    <div @click="onSettingClick">
-      <div i-fa6-solid:gear class="rotate" />
-    </div>
   </aside>
 </template>
 
@@ -52,19 +43,6 @@ const onSettingClick = () => {
   }
   100% {
     transform: translateY(0);
-  }
-}
-
-.rotate {
-  animation: rotate 3s linear infinite;
-}
-
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
   }
 }
 </style>
