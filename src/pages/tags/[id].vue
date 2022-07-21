@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
-import BasicLayout from '@/components/layouts/BasicLayout.vue'
-import Toolbar from '@/components/navigation/Toolbar.vue'
-import ArticleCard from '@/components/articles/ArticleCard.vue'
-import HomeSide from '@/components/home/HomeSide.vue'
+import { BasicLayout } from '@/components/layouts'
+import { Card, Toolbar } from '@/components/common'
+import { ArticleCard, HomeSide } from '@/components/business'
 import type { Tag } from '@/service'
 import { useLibraryStore } from '@/stores'
 import { changeTitle } from '@/composables'
-import Card from '@/components/common/Card.vue'
 
 const route = useRoute()
 const lib = useLibraryStore()

@@ -3,9 +3,11 @@
 
 <template>
   <div
-    class="border-shrink" inline-block p="x2 y0.5"
-    bg="md:hover:$primary-color" text="md:hover:white"
-    rounded-xl duration-200
+    class="border-shrink"
+    inline-block rounded-xl duration-200
+    p="x2 y0.5"
+    bg="md:hover:$primary-color"
+    text="md:hover:white"
   >
     <slot />
   </div>

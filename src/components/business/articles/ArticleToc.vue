@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import Card from '../common/Card.vue'
-import Toc from './Toc'
-import type { IToc } from './Toc'
+import { type IToc, Toc } from './Toc'
+import { Card } from '@/components/common'
 
 interface Props {
   toc: IToc[]

@@ -3,9 +3,8 @@ import { useRouter } from 'vue-router'
 import { NButton, NForm, NFormItem, NInput } from 'naive-ui'
 import type { FormInst, FormItemRule, FormRules } from 'naive-ui'
 import { onMounted, ref } from 'vue'
-import BlankLayout from '@/components/layouts/BlankLayout.vue'
-import Card from '@/components/common/Card.vue'
-import Toolbar from '@/components/navigation/Toolbar.vue'
+import { BlankLayout } from '@/components/layouts'
+import { Card, Toolbar } from '@/components/common'
 import { getParamsFromUrl } from '@/utils'
 import type { LoginParam } from '@/service'
 import { getCaptchaUrl, giteeOauthLogin, login } from '@/service'
@@ -144,9 +143,11 @@ const handleSubmit = (e: Event) => {
         </NForm>
         <!-- 提交表单按钮 -->
         <NButton
-          :color="app.theme.primaryColor" text-color="white"
-          w-full bg="$primary-color" rounded-lg
-          :disabled="disableSubmit" @click="handleSubmit"
+          type="primary"
+          text-color="white"
+          w-full rounded-lg
+          :disabled="disableSubmit"
+          @click="handleSubmit"
         >
           登录
         </NButton>

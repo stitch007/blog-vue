@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import Card from '../common/Card.vue'
-import Shrink from '../common/Shrink.vue'
+import { Card, Shrink } from '@/components/common'
 import { useLibraryStore } from '@/stores'
 
 const lib = useLibraryStore()

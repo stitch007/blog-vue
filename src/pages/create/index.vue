@@ -3,17 +3,14 @@ import { computed, reactive, ref, watch } from 'vue'
 import { NButton } from 'naive-ui'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
-import BasicLayout from '@/components/layouts/BasicLayout.vue'
-import Toolbar from '@/components/navigation/Toolbar.vue'
-import DynamicTags from '@/components/common/DynamicTags.vue'
-import HomeSide from '@/components/home/HomeSide.vue'
+import { BasicLayout } from '@/components/layouts'
+import { Card, DynamicTags, Toolbar } from '@/components/common'
+import { HomeSide } from '@/components/business'
 import { useAppStore, useLibraryStore } from '@/stores'
 import { useEditor } from '@/composables'
-import Card from '@/components/common/Card.vue'
-import type { Article } from '@/service'
-import { saveArticle } from '@/service'
+import { type Article, saveArticle } from '@/service'
 
-const { theme, isDark } = storeToRefs(useAppStore())
+const { isDark } = storeToRefs(useAppStore())
 const router = useRouter()
 const route = useRoute()
 const lib = useLibraryStore()
@@ -91,20 +88,26 @@ const postArticles = () => {
                 <span whitespace-nowrap mr-6>分类</span>
                 <DynamicTags
                   v-model:value="state.categories"
-                  tip="分类" :options="categoryOptions" :max="1"
+                  tip="分类"
+                  :options="categoryOptions"
+                  :max="1"
                 />
               </div>
               <div flex>
                 <span whitespace-nowrap mr-6>标签</span>
                 <DynamicTags
                   v-model:value="state.tags"
-                  tip="标签" :options="tagOptions" :max="8"
+                  tip="标签"
+                  :options="tagOptions"
+                  :max="8"
                 />
               </div>
             </div>
             <NButton
-              :color="theme.primaryColor" text-color="white" :disabled="state.disabled"
-              bg="$primary-color" @click="postArticles"
+              type="primary"
+              text-color="white"
+              :disabled="state.disabled"
+              @click="postArticles"
             >
               发布文章
             </NButton>

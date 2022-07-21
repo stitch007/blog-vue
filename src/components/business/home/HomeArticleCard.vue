@@ -2,7 +2,7 @@
 import dayjs from 'dayjs'
 import RemoveMd from 'remove-markdown'
 import { computed } from 'vue'
-import Card from '../common/Card.vue'
+import { Card } from '@/components/common'
 import type { Article } from '@/service'
 
 interface Props {

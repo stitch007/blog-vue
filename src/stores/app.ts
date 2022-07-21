@@ -55,45 +55,22 @@ export const useAppStore = defineStore('app-store', {
     },
     naiveThemeOverrides(): GlobalThemeOverrides {
       addCssVarsToHtml(this.theme, this.isDark)
-      const primaryColor = this.theme.primaryColor
       const theme: GlobalThemeOverrides = {
-        LoadingBar: {
-          colorLoading: primaryColor,
+        common: {
+          primaryColor: this.theme.primaryColor,
+          primaryColorHover: this.theme.primaryColor,
+          primaryColorPressed: this.theme.primaryColor,
+          primaryColorSuppl: this.theme.primaryColor,
         },
         Dropdown: {
           borderRadius: '8px',
-        },
-        Menu: {
-          itemColorHover: 'transparent',
-          itemColorActive: 'transparent',
-          itemColorActiveHover: 'transparent',
-          itemTextColorHover: primaryColor,
-          itemTextColorActive: primaryColor,
-          itemTextColorActiveHover: primaryColor,
-          itemTextColorChildActive: primaryColor,
-          itemIconColorHover: primaryColor,
-          itemIconColorActive: primaryColor,
-          itemIconColorActiveHover: primaryColor,
-          itemIconColorChildActive: primaryColor,
-          arrowColorHover: primaryColor,
-          arrowColorActive: primaryColor,
-          arrowColorActiveHover: primaryColor,
-          arrowColorChildActive: primaryColor,
-        },
-        Input: {
-          caretColor: primaryColor,
-          borderHover: `1px solid ${primaryColor}`,
-          borderFocus: `1px solid ${primaryColor}`,
-          boxShadowFocus: `0 0 0 2px ${primaryColor}33`,
-          colorFocus: 'transparent',
-          loadingColor: primaryColor,
         },
       }
       return theme
     },
   },
   actions: {
-    // 删除用户
+    // 删除用户(删掉token, 清空state.user)
     clearUser() {
       localStorage.removeItem('token')
       this.$patch((state) => {
@@ -105,14 +82,16 @@ export const useAppStore = defineStore('app-store', {
         }
       })
     },
+    // token -> localStorage, user ->state.user
     setUser(user: User) {
       localStorage.setItem('token', user.token)
       this.$patch((state) => {
         state.user = user
       })
     },
+    // 获取用户信息然后setUser
     fetchUserInfo() {
-      getUserInfo().then((user) => {
+      return getUserInfo().then((user) => {
         user && this.setUser(user)
       })
     },

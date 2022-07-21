@@ -15,7 +15,9 @@ export default defineConfig({
   plugins: [
     Vue(),
     vueJsx(),
-    Pages(),
+    Pages({
+      exclude: ['**/components/*.vue'],
+    }),
     Layouts(),
     Unocss(),
   ],

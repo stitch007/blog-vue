@@ -17,8 +17,9 @@ const createTime = computed(() => {
   >
     <!-- 分类 + 标题 -->
     <div
-      text="lg hover:$primary-color" font-bold line-clamp-1
-      transform="hover:translate-x-2" duration-300
+      text="lg hover:$primary-color"
+      transform="hover:translate-x-2"
+      font-bold line-clamp-1 duration-300
     >
       {{ `${article.category.name} > ${article.title}` }}
     </div>

@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import Shrink from '@/components/common/Shrink.vue'
+import { Shrink } from '@/components/common'
 
-interface Props {
+defineProps<{
   title: string
-}
-
-const { title } = defineProps<Props>()
+}>()
 </script>
 
 <template>

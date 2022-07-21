@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import BasicLayout from '@/components/layouts/BasicLayout.vue'
-import HomeToolbar from '@/components/home/HomeToolbar.vue'
-import HomeTabs from '@/components/home/HomeTabs'
-import HomeSide from '@/components/home/HomeSide.vue'
+import { BasicLayout } from '@/components/layouts'
+import { HomeSide, HomeTabs, HomeToolbar } from '@/components/business'
 import { changeTitle } from '@/composables'
 
 changeTitle('首页')

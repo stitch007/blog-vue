@@ -11,14 +11,10 @@ const scrollToTop = () => {
 <template>
   <aside
     pos="fixed bottom-8 right-4"
-    m="children:1"
-    p="children:2"
+    m="children:1" p="children:2"
     bg="children:$primary-color"
     rounded="children:md"
-    text-white
-    opacity-80
-    cursor-pointer
-    z-10
+    text-white opacity-80 cursor-pointer z-10
   >
     <Transition name="up">
       <div v-show="y > 100" @click="scrollToTop">

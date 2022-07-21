@@ -8,7 +8,7 @@ export interface IToc {
   children?: IToc[]
 }
 
-const Toc = defineComponent({
+export const Toc = defineComponent({
   props: {
     toc: {
       type: Object as PropType<IToc[]>,
@@ -40,5 +40,3 @@ const Toc = defineComponent({
     )
   },
 })
-
-export default Toc

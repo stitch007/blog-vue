@@ -8,8 +8,9 @@ const links = [
 <template>
   <div flex text-lg>
     <a
-      v-for="(link, index) in links" :key="index" :class="link.icon"
-      :href="link.href" target="_blank" mx2 inline-block
+      v-for="(link, index) in links" :key="index"
+      :class="link.icon" :href="link.href" target="_blank"
+      mx2 inline-block
     />
   </div>
 </template>

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { VNode } from 'vue'
 import { useVModel } from '@vueuse/core'
-import Shrink from '../common/Shrink.vue'
-import Card from './Card.vue'
+import { Card, Shrink } from '@/components/common'
 import { useHorizontalScroll } from '@/composables'
 
 export interface TabOption {

@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import randomColor from 'randomcolor'
-import BasicLayout from '@/components/layouts/BasicLayout.vue'
-import Toolbar from '@/components/navigation/Toolbar.vue'
-import HomeSide from '@/components/home/HomeSide.vue'
+import { BasicLayout } from '@/components/layouts'
+import { Card, Toolbar } from '@/components/common'
+import { HomeSide } from '@/components/business'
 import { useLibraryStore } from '@/stores'
 import { changeTitle } from '@/composables'
-import Card from '@/components/common/Card.vue'
 
 const lib = useLibraryStore()
 changeTitle('全部标签')

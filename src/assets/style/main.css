@@ -34,3 +34,7 @@ body::-webkit-scrollbar-corner {
 input::-ms-clear, input::-ms-reveal{
   display: none;
 }
+
+button, [type='button'] {
+  background-color: var(--primary-color);
+}

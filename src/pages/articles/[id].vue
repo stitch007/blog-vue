@@ -2,14 +2,12 @@
 import { computed, ref, watchEffect } from 'vue'
 import Giscus from '@giscus/vue'
 import { useRoute } from 'vue-router'
-import BasicLayout from '@/components/layouts/BasicLayout.vue'
-import Toolbar from '@/components/navigation/Toolbar.vue'
-import ArticleToc from '@/components/articles/ArticleToc.vue'
-import HomeSide from '@/components/home/HomeSide.vue'
+import { BasicLayout } from '@/components/layouts'
+import { Card, Toolbar } from '@/components/common'
+import { ArticleToc, HomeSide } from '@/components/business'
 import { changeTitle, useMarkdown } from '@/composables'
 import type { Article } from '@/service'
 import { useAppStore, useLibraryStore } from '@/stores'
-import Card from '@/components/common/Card.vue'
 
 const route = useRoute()
 const lib = useLibraryStore()
@@ -60,7 +58,7 @@ const { content, contentEl, toc, progress } = useMarkdown(computed(() => article
       <div sticky top-4>
         <!-- 目录 -->
         <ArticleToc :toc="toc" :process="progress" mb4 />
-        <HomeSide />
+        <HomeSide mb4 />
       </div>
     </template>
   </BasicLayout>

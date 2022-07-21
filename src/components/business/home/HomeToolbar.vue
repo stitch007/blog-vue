@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { NButton } from 'naive-ui'
 import { ref } from 'vue'
-import Shrink from '../common/Shrink.vue'
-import Search from '../search/Search.vue'
+import { Shrink } from '@/components/common'
+import { Search } from '@/components/business'
 import { useAppStore } from '@/stores'
 
 const app = useAppStore()
@@ -25,8 +25,9 @@ const showSearchModal = ref(false)
       </Shrink>
     </div>
     <NButton
-      :color="app.theme.primaryColor"
-      bg="$primary-color" text-color="white" rounded-md
+      type="primary"
+      text-color="white"
+      rounded-md
       @click="$router.push(app.isLogin ? '/create' : '/login')"
     >
       {{ app.isLogin ? '写文章' : '登录' }}

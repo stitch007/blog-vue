@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import NaiveProvider from '@/components/provider/NaiveProvider.vue'
+import { NaiveProvider } from '@/components/common'
 import { useAppStore, useLibraryStore } from '@/stores'
 
 const token = localStorage.getItem('token')

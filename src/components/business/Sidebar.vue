@@ -1,40 +1,17 @@
 <script setup lang="ts">
 import { NDrawer, NDropdown } from 'naive-ui'
 import { ref } from 'vue'
-import LibraryCount from '../articles/LibraryCount.vue'
-import Link from '../common/Link.vue'
-import Card from '../common/Card.vue'
+import { Card } from '@/components/common'
+import { LibraryCount, Link } from '@/components/business'
 import { useAppStore } from '@/stores'
 import { logout } from '@/service'
+import { navOptions } from '@/router'
 import DefaultAvatar from '@/assets/img/default-avatar.png'
 
 const app = useAppStore()
 
 // 分割线上的船 点一下会动
 const isBoating = ref(false)
-
-const navOptions = [
-  {
-    icon: 'i-ic:round-home',
-    text: '首页',
-    path: '/',
-  },
-  {
-    icon: 'i-ic:round-article',
-    text: '文章',
-    path: '/articles',
-  },
-  {
-    icon: 'i-ic:round-tag',
-    text: '标签',
-    path: '/tags',
-  },
-  {
-    icon: 'i-ic:round-category',
-    text: '分类',
-    path: '/categories',
-  },
-]
 
 const options = [
   {

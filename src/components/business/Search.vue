@@ -5,7 +5,7 @@ import RemoveMd from 'remove-markdown'
 import { useThrottleFn, useVModel } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 import { ref, watch, watchEffect } from 'vue'
-import Card from '../common/Card.vue'
+import { Card } from '@/components/common'
 import { useLibraryStore } from '@/stores'
 
 const props = defineProps<{ show: boolean }>()

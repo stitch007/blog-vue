@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import BasicLayout from '@/components/layouts/BasicLayout.vue'
-import Toolbar from '@/components/navigation/Toolbar.vue'
-import ArticleCard from '@/components/articles/ArticleCard.vue'
-import HomeSide from '@/components/home/HomeSide.vue'
+import { BasicLayout } from '@/components/layouts'
+import { Card, Toolbar } from '@/components/common'
+import { ArticleCard, HomeSide } from '@/components/business'
 import { useLibraryStore } from '@/stores'
 import { changeTitle } from '@/composables'
-import Card from '@/components/common/Card.vue'
 
 const lib = useLibraryStore()
 changeTitle('全部文章')

@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import LibraryCount from '../articles/LibraryCount.vue'
-import Link from '../common/Link.vue'
-import Archives from '../articles/Archives.vue'
-import Card from '../common/Card.vue'
+import { Card } from '@/components/common'
+import { Archives, LibraryCount, Link } from '@/components/business'
 </script>
 
 <template>

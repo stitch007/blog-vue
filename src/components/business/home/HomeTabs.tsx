@@ -1,6 +1,6 @@
 import { computed, defineComponent, ref } from 'vue'
-import Tabs from '../common/Tabs.vue'
-import HomeArticleCard from './HomeArticleCard.vue'
+import { HomeArticleCard } from '@/components/business'
+import { Tabs } from '@/components/common'
 import { useLibraryStore } from '@/stores'
 import type { Article } from '@/service'
 

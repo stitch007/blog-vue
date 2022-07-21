@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { NAutoComplete, NButton, NDynamicTags } from 'naive-ui'
-import { storeToRefs } from 'pinia'
 import { useVModel } from '@vueuse/core'
-import { useAppStore } from '@/stores'
 
 interface Props {
   value: string[]
@@ -11,8 +9,6 @@ interface Props {
   options: string[]
   max?: number
 }
-
-const { theme } = storeToRefs(useAppStore())
 
 const props = defineProps<Props>()
 const emit = defineEmits<{ (e: 'update:value', value: string[]): void }>()
@@ -37,11 +33,10 @@ const options = computed(() => [input.value, ...props.options])
     </template>
     <template #trigger="{ activate, disabled }">
       <NButton
+        type="primary"
+        text-color="white"
         size="small"
         :disabled="disabled"
-        :color="theme.primaryColor"
-        bg="$primary-color"
-        text-color="white"
         @click="activate()"
       >
         {{ `添加${tip}` }}
