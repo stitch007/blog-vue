@@ -40,7 +40,12 @@ const handleSelect = (key: string | number) => {
     <!-- 头像 -->
     <div m="xauto y4" w16 h16>
       <NDropdown trigger="click" :options="options" @select="handleSelect">
-        <img :src="app.user.avatarUrl || DefaultAvatar" alt="avatar" rounded-xl>
+        <img
+          :src="app.user.avatarUrl || DefaultAvatar"
+          alt="avatar"
+          referrer="no-referrer|origin|unsafe-url"
+          rounded-xl
+        >
       </NDropdown>
     </div>
     <Card p="x8 t2" flex flex-col>

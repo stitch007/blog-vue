@@ -27,6 +27,7 @@ export const useAppStore = defineStore('app-store', {
     showSidebar: false,
     // 用户信息
     user: <User>{
+      id: 0,
       username: '',
       avatarUrl: '',
       token: localStorage.getItem('token') || '',
@@ -75,6 +76,7 @@ export const useAppStore = defineStore('app-store', {
       localStorage.removeItem('token')
       this.$patch((state) => {
         state.user = {
+          id: 0,
           username: '',
           avatarUrl: '',
           token: '',

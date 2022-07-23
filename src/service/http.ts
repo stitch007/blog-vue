@@ -1,6 +1,7 @@
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 import axios from 'axios'
 import { router } from '@/router'
+import { useAppStore } from '@/stores'
 
 export interface ResponseData<T = any> {
   code: number
@@ -54,6 +55,7 @@ class Http {
       if (response.code === 20000) {
         return response.data
       } else if (response.code === 40100) {
+        useAppStore().clearUser()
         router.push('/login')
         window.$message?.error('请先登录')
       } else {

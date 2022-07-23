@@ -7,6 +7,7 @@ export interface LoginParam {
 }
 
 export interface User {
+  id: number
   username: string
   avatarUrl: string
   token: string

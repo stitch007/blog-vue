@@ -11,6 +11,7 @@ import { getCaptchaUrl, giteeOauthLogin, login } from '@/service'
 
 import { useAppStore } from '@/stores'
 import gitee from '@/assets/img/gitee.svg'
+import BlogTitle from '@/components/business/BlogTitle.vue'
 
 const app = useAppStore()
 const router = useRouter()
@@ -105,15 +106,7 @@ const handleSubmit = (e: Event) => {
   <BlankLayout>
     <Toolbar title="登录" />
     <Card bordered flex flex-col items-center py12>
-      <div flex items-center text-lg font-bold scale-95>
-        <div pr-2 text="$primary-color dark:white">
-          STITCH'S
-        </div>
-        <div w="2.5" h="2.5" mr="-1.5" bg="$primary-color" rotate-45 />
-        <div flex items-center p="l2 r2" bg="$primary-color" text-white rounded>
-          BLOG
-        </div>
-      </div>
+      <BlogTitle scale-95 />
       <div text-base text-gray-500 pt4 pb8>
         -> 很幸运与你相遇
       </div>

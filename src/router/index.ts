@@ -15,7 +15,8 @@ export const router = createRouter({
   },
 })
 
-const adminRouter = ['/create']
+const needLoginRoute = ['/create', '/chatroom']
+const adminRoute = ['/create']
 
 /**
  * 初始化路由守卫
@@ -26,12 +27,13 @@ const setupNavigationGuards = (router: Router) => {
     app.showSidebar = false
 
     // 权限判断
-    if (adminRouter.includes(to.path)) {
-      if (!app.user.token) {
+    if (needLoginRoute.includes(to.path)) {
+      if (!app.isLogin) {
         window.$message?.error('请先登录')
         next({ path: '/login' })
         return
-      } else if (app.user.role !== 'ADMIN') {
+      }
+      if (adminRoute.includes(to.path) && app.user.role !== 'ADMIN') {
         window.$message?.error('没有权限访问本页面')
         next({ path: from.fullPath })
         return
@@ -63,4 +65,5 @@ export const navOptions = [
   { path: '/articles', text: '文章', icon: 'i-ic:round-article' },
   { path: '/tags', text: '标签', icon: 'i-ic:round-tag' },
   { path: '/categories', text: '分类', icon: 'i-ic:round-category' },
+  { path: '/chatroom', text: '聊天室', icon: 'i-ic:round-chat' },
 ]
