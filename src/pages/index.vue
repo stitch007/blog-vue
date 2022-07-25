@@ -10,7 +10,7 @@ changeTitle('首页')
   <BasicLayout>
     <template #left>
       <HomeToolbar />
-      <HomeTabs />
+      <HomeTabs pb4 />
     </template>
     <template #right>
       <div h13 />

@@ -43,7 +43,7 @@ const handleSelect = (key: string | number) => {
         <img
           :src="app.user.avatarUrl || DefaultAvatar"
           alt="avatar"
-          referrer="no-referrer|origin|unsafe-url"
+          referrerPolicy="no-referrer"
           rounded-xl
         >
       </NDropdown>

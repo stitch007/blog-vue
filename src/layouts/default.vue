@@ -62,7 +62,7 @@ const handleSelect = (key: string | number) => {
           <div v-else grow flex flex-col justify-end>
             <NDropdown trigger="click" :options="options" @select="handleSelect">
               <Shrink flex m="xauto y4 xl:4" p="1 xl:2" rounded-xl cursor-pointer>
-                <img :src="app.user.avatarUrl" alt="avatar" w10 h10 rounded-xl>
+                <img :src="app.user.avatarUrl" alt="avatar" referrerPolicy="no-referrer" w10 h10 rounded-xl>
                 <div hidden xl:block pl2 text-base>
                   {{ app.user?.username }}
                 </div>

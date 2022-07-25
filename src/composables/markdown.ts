@@ -76,8 +76,8 @@ export const useMarkdown = (markdown: ComputedRef<string | undefined>) => {
       offsetTop: (h.node as HTMLElement).offsetTop,
       children: h.children?.map(child => ({
         name: child.node.innerHTML,
-        active: activeTocName.value === h.node.innerHTML,
-        offsetTop: (h.node as HTMLElement).offsetTop,
+        active: activeTocName.value === child.node.innerHTML,
+        offsetTop: (child.node as HTMLElement).offsetTop,
       })),
     }))
   })
@@ -103,7 +103,11 @@ export const useMarkdown = (markdown: ComputedRef<string | undefined>) => {
         if (node.nodeName === 'H2') {
           headNodes.value.push({ node })
         } else if (node.nodeName === 'H3') {
-          headNodes.value[headNodes.value.length - 1].children?.push({ node })
+          if (headNodes.value[headNodes.value.length - 1].children) {
+            headNodes.value[headNodes.value.length - 1].children?.push({ node })
+          } else {
+            headNodes.value[headNodes.value.length - 1].children = [{ node }]
+          }
         }
       })
       // 图片加载完成后 offsetTop 会变，需要更新目录

@@ -151,7 +151,7 @@ const handleSubmit = (e: Event) => {
         w70 md:w80 h9 rounded-lg cursor-pointer
         border="~ gray-200 dark:gray-600"
       >
-        <img :src="gitee" referrer="no-referrer|origin|unsafe-url" w6 mr4>
+        <img :src="gitee" w6 mr4>
         <div>通过 Gitee 登录</div>
       </a>
     </Card>
